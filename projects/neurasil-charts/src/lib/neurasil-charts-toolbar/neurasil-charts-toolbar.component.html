@@ -1,0 +1,47 @@
+<div class="toolbar-container" >
+    <div class="toolbar">
+        <div class="filter-textbox-container input-group input-group-sm">
+            <input type="text" class="filter-textbox form-control noSelect" placeholder="Filters" [(ngModel)]="toolbarProps._datasetFilter" (change)="toolbarPropsChanged($event)">
+        </div>
+        <div class="input-group input-group-sm filter-help" >
+            <div class="tooltip_qd_chartHelper">?
+                <span class="tooltiptext_qd_chartHelper">
+                To filter data, use commas to separate data, add - to exclude data.
+                <br> <br> 
+                EITHER use ~ to include columns OR ~! to exclude columns.
+                </span>
+            </div>
+        </div>
+
+        <div class="chart-selector-container">
+            <div class="chart-selector input-group input-group-sm">
+                <select class="form-control" [(ngModel)]="toolbarProps.chartType" (ngModelChange)="toolbarPropsChanged($event)">
+                    <option value='0'>Bar Chart</option>
+                    <option value='7'>Horizontal Bar</option>               
+                    <option value='2'>Stacked Bar Chart</option>
+                    <option value='3'>Line Chart</option>
+                    <option value='1'>Bar & Line Combo</option>
+                    <option value='4'>Pie</option>
+                    <option value='5'>Donut</option>
+                    <!-- <option value='8'>Pareto (1 dataset)</option> -->
+                    <option value='9'>Pareto Analysis</option>
+                    <option value='6'>Grid View</option>
+
+                </select>
+            </div>
+            <div style="float:right">
+                <div style="padding-top:4px;padding-right: 15px; padding-left:5px">
+                    <span style="zoom:0.8;">
+                        <label class="switch tooltip_qd_chartHelper" >
+                        <input type='checkbox' id='${this.id}_swapCheckbox'  [(ngModel)]="toolbarProps.swapLabelsAndDatasets" (ngModelChange)="toolbarPropsChanged($event)">
+                            <span class="slider round"></span>
+                            <span class="tooltiptext_qd_chartHelper">
+                                Swap labels and datasets
+                            </span>
+                        </label>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

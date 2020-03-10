@@ -1,0 +1,22 @@
+{
+  "name": "neurasil-charts",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^8.2.14",
+    "@angular/core": "^8.2.14",
+    "chart.js": "^2.9.3"
+  },
+  "main": "bundles/neurasil-charts.umd.js",
+  "module": "fesm5/neurasil-charts.js",
+  "es2015": "fesm2015/neurasil-charts.js",
+  "esm5": "esm5/neurasil-charts.js",
+  "esm2015": "esm2015/neurasil-charts.js",
+  "fesm5": "fesm5/neurasil-charts.js",
+  "fesm2015": "fesm2015/neurasil-charts.js",
+  "typings": "neurasil-charts.d.ts",
+  "metadata": "neurasil-charts.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

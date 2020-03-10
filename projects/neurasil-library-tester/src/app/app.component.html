@@ -1,0 +1,284 @@
+<input #fileInput type="file" accept=".csv,.json" (change)="uploadFromFile($event)" />
+<br>
+<textarea #customStringTextArea
+  placeholder="or manually paste JSON or CSV string. JSON eg. [{key:val, key2:val2}, {...}, ...]"></textarea>
+<br>
+
+<button (click)="btnClick()">Visualize Own Data</button>
+<br>
+<input type="text" [value]="filter" (change)="updateFilter($event)" />
+<br>
+<button (click)="setLayout(1)">1 Chart</button>
+<button (click)="setLayout(2)">2 Charts</button>
+<button (click)="setLayout(3)">3 Charts (A)</button>
+<button (click)="setLayout(4)">3 Charts (B)</button>
+<button (click)="setLayout(5)">6 Charts (A)</button>
+<button (click)="setLayout(7)">6 Charts (B)</button>
+<button (click)="setLayout(6)">9 Charts</button>
+
+<br>
+
+<div *ngIf="layout == 1" class="wrapper1x">
+  <div *ngIf="data" class="grid-cell">
+    <neurasil-charts 
+      [data]="data  | neurasilDataFilter : filter" 
+      [(showToolbar)]="chartProps[0].showToolbar"
+      [(chartType)]="chartProps[0].chartType"
+      [(swapLabelsAndDatasets)]="chartProps[0].swapLabelsAndDatasets">
+    </neurasil-charts>
+  </div>
+</div>
+
+
+<div *ngIf="layout == 2" class="wrapper2x">
+  <div *ngIf="data" class="grid-cell">
+    <neurasil-charts 
+      [data]="data  | neurasilDataFilter : filter" 
+      [(showToolbar)]="chartProps[0].showToolbar"
+      [(chartType)]="chartProps[0].chartType"
+      [(swapLabelsAndDatasets)]="chartProps[0].swapLabelsAndDatasets">
+    </neurasil-charts>
+  </div>
+  <div *ngIf="data" class="grid-cell">
+    <neurasil-charts 
+     [data]="data  | neurasilDataFilter : filter" 
+      [(showToolbar)]="chartProps[1].showToolbar"
+      [(chartType)]="chartProps[1].chartType"
+      [(swapLabelsAndDatasets)]="chartProps[1].swapLabelsAndDatasets">
+    </neurasil-charts>
+  </div>
+</div>
+
+
+<div *ngIf="layout == 3" class="wrapper3x">
+    <div *ngIf="data" class="grid-cell grid-cell-2x2">
+        <neurasil-charts 
+          [data]="data  | neurasilDataFilter : filter" 
+          [(showToolbar)]="chartProps[0].showToolbar"
+          [(chartType)]="chartProps[0].chartType"
+          [(swapLabelsAndDatasets)]="chartProps[0].swapLabelsAndDatasets">
+        </neurasil-charts>
+      </div>
+      <div *ngIf="data" class="grid-cell">
+        <neurasil-charts 
+          [data]="data  | neurasilDataFilter : filter" 
+          [(showToolbar)]="chartProps[1].showToolbar"
+          [(chartType)]="chartProps[1].chartType"
+          [(swapLabelsAndDatasets)]="chartProps[1].swapLabelsAndDatasets">
+        </neurasil-charts>
+      </div>
+      <div *ngIf="data" class="grid-cell">
+          <neurasil-charts 
+            [data]="data  | neurasilDataFilter : filter" 
+            [(showToolbar)]="chartProps[2].showToolbar"
+            [(chartType)]="chartProps[2].chartType"
+            [(swapLabelsAndDatasets)]="chartProps[2].swapLabelsAndDatasets">
+          </neurasil-charts>
+        </div>
+</div>
+
+<div *ngIf="layout == 4" class="wrapper3x">
+    <div *ngIf="data" class="grid-cell">
+        <neurasil-charts 
+          [data]="data  | neurasilDataFilter : filter" 
+          [(showToolbar)]="chartProps[0].showToolbar"
+          [(chartType)]="chartProps[0].chartType"
+          [(swapLabelsAndDatasets)]="chartProps[0].swapLabelsAndDatasets">
+        </neurasil-charts>
+      </div>
+      <div *ngIf="data" class="grid-cell  grid-cell-2x2">
+        <neurasil-charts 
+          [data]="data  | neurasilDataFilter : filter" 
+          [(showToolbar)]="chartProps[1].showToolbar"
+          [(chartType)]="chartProps[1].chartType"
+          [(swapLabelsAndDatasets)]="chartProps[1].swapLabelsAndDatasets">
+        </neurasil-charts>
+      </div>
+      <div *ngIf="data" class="grid-cell">
+        <neurasil-charts 
+          [data]="data  | neurasilDataFilter : filter" 
+          [(showToolbar)]="chartProps[2].showToolbar"
+          [(chartType)]="chartProps[2].chartType"
+          [(swapLabelsAndDatasets)]="chartProps[2].swapLabelsAndDatasets">
+        </neurasil-charts>
+      </div>
+</div>
+
+<div *ngIf="layout == 5" class="wrapper3x">
+    <div *ngIf="data" class="grid-cell grid-cell-2x2">
+        <neurasil-charts 
+          [data]="data  | neurasilDataFilter : filter" 
+          [(showToolbar)]="chartProps[0].showToolbar"
+          [(chartType)]="chartProps[0].chartType"
+          [(swapLabelsAndDatasets)]="chartProps[0].swapLabelsAndDatasets">
+        </neurasil-charts>
+      </div>
+      <div *ngIf="data" class="grid-cell  ">
+        <neurasil-charts 
+          [data]="data  | neurasilDataFilter : filter" 
+          [(showToolbar)]="chartProps[1].showToolbar"
+          [(chartType)]="chartProps[1].chartType"
+          [(swapLabelsAndDatasets)]="chartProps[1].swapLabelsAndDatasets">
+        </neurasil-charts>
+      </div>
+      <div *ngIf="data" class="grid-cell">
+        <neurasil-charts 
+          [data]="data  | neurasilDataFilter : filter" 
+          [(showToolbar)]="chartProps[2].showToolbar"
+          [(chartType)]="chartProps[2].chartType"
+          [(swapLabelsAndDatasets)]="chartProps[2].swapLabelsAndDatasets">
+        </neurasil-charts>
+      </div>
+      <div *ngIf="data" class="grid-cell">
+          <neurasil-charts 
+            [data]="data  | neurasilDataFilter : filter" 
+            [(showToolbar)]="chartProps[3].showToolbar"
+            [(chartType)]="chartProps[3].chartType"
+            [(swapLabelsAndDatasets)]="chartProps[3].swapLabelsAndDatasets">
+          </neurasil-charts>
+        </div>
+        <div *ngIf="data" class="grid-cell">
+          <neurasil-charts 
+            [data]="data  | neurasilDataFilter : filter" 
+            [(showToolbar)]="chartProps[4].showToolbar"
+            [(chartType)]="chartProps[4].chartType"
+            [(swapLabelsAndDatasets)]="chartProps[4].swapLabelsAndDatasets">
+          </neurasil-charts>
+        </div>
+        <div *ngIf="data" class="grid-cell">
+          <neurasil-charts 
+            [data]="data  | neurasilDataFilter : filter" 
+            [(showToolbar)]="chartProps[5].showToolbar"
+            [(chartType)]="chartProps[5].chartType"
+            [(swapLabelsAndDatasets)]="chartProps[5].swapLabelsAndDatasets">
+          </neurasil-charts>
+        </div>
+</div>
+
+<div *ngIf="layout == 6" class="wrapper3x">
+    <div *ngIf="data" class="grid-cell">
+        <neurasil-charts 
+          [data]="data  | neurasilDataFilter : filter" 
+          [(showToolbar)]="chartProps[0].showToolbar"
+          [(chartType)]="chartProps[0].chartType"
+          [(swapLabelsAndDatasets)]="chartProps[0].swapLabelsAndDatasets">
+        </neurasil-charts>
+      </div>
+      <div *ngIf="data" class="grid-cell  ">
+        <neurasil-charts 
+          [data]="data  | neurasilDataFilter : filter" 
+          [(showToolbar)]="chartProps[1].showToolbar"
+          [(chartType)]="chartProps[1].chartType"
+          [(swapLabelsAndDatasets)]="chartProps[1].swapLabelsAndDatasets">
+        </neurasil-charts>
+      </div>
+      <div *ngIf="data" class="grid-cell">
+        <neurasil-charts 
+          [data]="data  | neurasilDataFilter : filter" 
+          [(showToolbar)]="chartProps[2].showToolbar"
+          [(chartType)]="chartProps[2].chartType"
+          [(swapLabelsAndDatasets)]="chartProps[2].swapLabelsAndDatasets">
+        </neurasil-charts>
+      </div>
+      <div *ngIf="data" class="grid-cell">
+          <neurasil-charts 
+            [data]="data  | neurasilDataFilter : filter" 
+            [(showToolbar)]="chartProps[3].showToolbar"
+            [(chartType)]="chartProps[3].chartType"
+            [(swapLabelsAndDatasets)]="chartProps[3].swapLabelsAndDatasets">
+          </neurasil-charts>
+        </div>
+        <div *ngIf="data" class="grid-cell">
+          <neurasil-charts 
+            [data]="data  | neurasilDataFilter : filter" 
+            [(showToolbar)]="chartProps[4].showToolbar"
+            [(chartType)]="chartProps[4].chartType"
+            [(swapLabelsAndDatasets)]="chartProps[4].swapLabelsAndDatasets">
+          </neurasil-charts>
+        </div>
+        <div *ngIf="data" class="grid-cell">
+          <neurasil-charts 
+            [data]="data  | neurasilDataFilter : filter" 
+            [(showToolbar)]="chartProps[5].showToolbar"
+            [(chartType)]="chartProps[5].chartType"
+            [(swapLabelsAndDatasets)]="chartProps[5].swapLabelsAndDatasets">
+          </neurasil-charts>
+        </div>
+        <div *ngIf="data" class="grid-cell">
+            <neurasil-charts 
+              [data]="data  | neurasilDataFilter : filter" 
+              [(showToolbar)]="chartProps[6].showToolbar"
+              [(chartType)]="chartProps[6].chartType"
+              [(swapLabelsAndDatasets)]="chartProps[6].swapLabelsAndDatasets">
+            </neurasil-charts>
+          </div>
+          <div *ngIf="data" class="grid-cell">
+            <neurasil-charts 
+              [data]="data  | neurasilDataFilter : filter" 
+              [(showToolbar)]="chartProps[7].showToolbar"
+              [(chartType)]="chartProps[7].chartType"
+              [(swapLabelsAndDatasets)]="chartProps[7].swapLabelsAndDatasets">
+            </neurasil-charts>
+          </div>
+          <div *ngIf="data" class="grid-cell">
+            <neurasil-charts 
+              [data]="data  | neurasilDataFilter : filter" 
+              [(showToolbar)]="chartProps[8].showToolbar"
+              [(chartType)]="chartProps[8].chartType"
+              [(swapLabelsAndDatasets)]="chartProps[8].swapLabelsAndDatasets">
+            </neurasil-charts>
+          </div>
+</div>
+
+<div *ngIf="layout == 7" class="wrapper4x">
+    <div *ngIf="data" class="grid-cell grid-cell-2x2">
+        <neurasil-charts 
+          [data]="data  | neurasilDataFilter : filter" 
+          [(showToolbar)]="chartProps[0].showToolbar"
+          [(chartType)]="chartProps[0].chartType"
+          [(swapLabelsAndDatasets)]="chartProps[0].swapLabelsAndDatasets">
+        </neurasil-charts>
+      </div>
+      <div *ngIf="data" class="grid-cell grid-cell-2x2">
+        <neurasil-charts 
+          [data]="data  | neurasilDataFilter : filter" 
+          [(showToolbar)]="chartProps[1].showToolbar"
+          [(chartType)]="chartProps[1].chartType"
+          [(swapLabelsAndDatasets)]="chartProps[1].swapLabelsAndDatasets">
+        </neurasil-charts>
+      </div>
+      <div *ngIf="data" class="grid-cell">
+        <neurasil-charts 
+          [data]="data  | neurasilDataFilter : filter" 
+          [(showToolbar)]="chartProps[2].showToolbar"
+          [(chartType)]="chartProps[2].chartType"
+          [(swapLabelsAndDatasets)]="chartProps[2].swapLabelsAndDatasets">
+        </neurasil-charts>
+      </div>
+      <div *ngIf="data" class="grid-cell">
+          <neurasil-charts 
+            [data]="data  | neurasilDataFilter : filter" 
+            [(showToolbar)]="chartProps[3].showToolbar"
+            [(chartType)]="chartProps[3].chartType"
+            [(swapLabelsAndDatasets)]="chartProps[3].swapLabelsAndDatasets">
+          </neurasil-charts>
+        </div>
+        <div *ngIf="data" class="grid-cell">
+          <neurasil-charts 
+            [data]="data  | neurasilDataFilter : filter" 
+            [(showToolbar)]="chartProps[4].showToolbar"
+            [(chartType)]="chartProps[4].chartType"
+            [(swapLabelsAndDatasets)]="chartProps[4].swapLabelsAndDatasets">
+          </neurasil-charts>
+        </div>
+        <div *ngIf="data" class="grid-cell">
+          <neurasil-charts 
+            [data]="data  | neurasilDataFilter : filter" 
+            [(showToolbar)]="chartProps[5].showToolbar"
+            [(chartType)]="chartProps[5].chartType"
+            [(swapLabelsAndDatasets)]="chartProps[5].swapLabelsAndDatasets">
+          </neurasil-charts>
+        </div>
+
+
+</div>
