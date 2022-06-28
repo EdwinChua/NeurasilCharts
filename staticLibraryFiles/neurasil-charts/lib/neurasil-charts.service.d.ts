@@ -1,4 +1,5 @@
 import { NEURASIL_CHART_TYPE } from './models';
+import * as i0 from "@angular/core";
 export declare class NeurasilChartsService {
     constructor();
     parseDataFromDatasource(chartType: NEURASIL_CHART_TYPE, incomingData: Array<any>, swapLabelsAndDatasets: boolean): {
@@ -22,4 +23,6 @@ export declare class NeurasilChartsService {
         datasets: any[];
     };
     performParetoAnalysis(props: any): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<NeurasilChartsService, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<NeurasilChartsService>;
 }

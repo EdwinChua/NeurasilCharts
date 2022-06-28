@@ -1,7 +1,0 @@
-/**
- * @fileoverview added by tsickle
- * Generated from: lib/pipes/index.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-export { NeurasilDataFilter } from './neurasil-data-filter/neurasil-data-filter.pipe';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290Ijoibmc6Ly9uZXVyYXNpbC1jaGFydHMvIiwic291cmNlcyI6WyJsaWIvcGlwZXMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQSxPQUFPLEVBQUUsa0JBQWtCLEVBQUUsTUFBTSxrREFBa0QsQ0FBQSIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCB7IE5ldXJhc2lsRGF0YUZpbHRlciB9IGZyb20gJy4vbmV1cmFzaWwtZGF0YS1maWx0ZXIvbmV1cmFzaWwtZGF0YS1maWx0ZXIucGlwZSciXX0=

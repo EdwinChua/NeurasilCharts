@@ -136,7 +136,6 @@ export class NeurasilChartsService {
 
 
   chartObjectBuilder(chartType, chartData, useAltAxis, title, yAxisLabelText, yAxisLabelText_Alt, xAxisLabelText, cornerstone, swapLabelsAndDatasets, formatObject) {
-    //const chartTypes = NexusChartjsChart.chartTypes;
     if ((chartType == NEURASIL_CHART_TYPE.BAR || chartType == NEURASIL_CHART_TYPE.HORIZONTAL_BAR || chartType == NEURASIL_CHART_TYPE.LINE || chartType == NEURASIL_CHART_TYPE.STACKED || chartType == NEURASIL_CHART_TYPE.PIE || chartType == NEURASIL_CHART_TYPE.DONUT) && useAltAxis == true) {
       console.warn("You have enabled alternate axis on a (unsupported) chart type. It has been set to false");
       useAltAxis = false;
@@ -144,6 +143,7 @@ export class NeurasilChartsService {
 
     if (chartType == NEURASIL_CHART_TYPE.STACKED_PARETO) {
       yAxisLabelText_Alt = "Pareto %";
+      useAltAxis = true;
     }
 
     let options: any = {
@@ -157,89 +157,93 @@ export class NeurasilChartsService {
       }
     }
 
-    let yAxisLabel = { display: false, labelString: "" }
+    let yAxisLabel = { display: false, text: "" }
     if (yAxisLabelText) {
       yAxisLabel.display = true;
-      yAxisLabel.labelString = yAxisLabelText;
+      yAxisLabel.text = yAxisLabelText;
     }
 
-    let yAxisLabel_Alt = { display: false, labelString: "" }
+    let yAxisLabel_Alt = { display: false, text: "" }
     if (yAxisLabelText_Alt) {
       yAxisLabel_Alt.display = true;
-      yAxisLabel_Alt.labelString = yAxisLabelText_Alt;
+      yAxisLabel_Alt.text = yAxisLabelText_Alt;
     }
 
-    let xAxisLabel = { display: false, labelString: "" };
+    let xAxisLabel = { display: false, text: "" };
     if (xAxisLabelText) {
       xAxisLabel.display = true;
-      xAxisLabel.labelString = xAxisLabelText;
+      xAxisLabel.text = xAxisLabelText;
     }
-
+    console.log("here", yAxisLabel)
     if (chartType != NEURASIL_CHART_TYPE.PIE && chartType != NEURASIL_CHART_TYPE.DONUT) {
       if (chartType == NEURASIL_CHART_TYPE.STACKED || chartType == NEURASIL_CHART_TYPE.STACKED_PARETO) {
 
         options.scales = {
-          xAxes: [{
+          x: {
             stacked: true,
-            scaleLabel: xAxisLabel
-          }],
-          yAxes: [{
+            title: xAxisLabel
+          },
+          yAxis: {
+            type:'linear',
+            position: 'left',
             stacked: true,
-            scaleLabel: yAxisLabel
-          }]
+            title: yAxisLabel
+          }
         }
 
         if (chartType == NEURASIL_CHART_TYPE.STACKED_PARETO) {
+          
           let altAxisObj: any = {
-            id: 'yAxis-alt',
-            display: 'auto',
-            ticks: {
-              beginAtZero: true,
-            },
+            //id: 'yAxis_pareto',
+            type:'linear',
             position: 'right',
-            scaleLabel: yAxisLabel_Alt
+            display: true,
+            beginAtZero: true,
+            ticks:{},
+            title: yAxisLabel_Alt
           }
-          altAxisObj.ticks.min = 0;
-          altAxisObj.ticks.max = 100;
-          altAxisObj.ticks.stepSize = 80
+          altAxisObj.min = 0;
+          altAxisObj.max = 100;
+          altAxisObj.ticks = {
+            stepSize: 80
+          }
 
-          options.scales.yAxes.push(altAxisObj)
-
+          options.scales.yAxis_pareto= altAxisObj;
+          
         }
 
       } else {
         options.scales = {
-          xAxes: [{
-            scaleLabel: xAxisLabel
-          }],
-          yAxes: [{
-            id: 'yAxis',
-            ticks: {
-              beginAtZero: true,
-            },
-            scaleLabel: yAxisLabel
-          },]
+          x: {
+            title: xAxisLabel
+          },
+          yAxis: {
+            beginAtZero: true,
+            title: yAxisLabel
+          },
         }
 
         if (useAltAxis) {
           let altAxisObj: any = {
-            id: 'yAxis-alt',
-            display: 'auto',
+            //id: 'yAxis_alt',
+            display: true,
             ticks: {
               beginAtZero: true,
             },
             position: 'right',
-            scaleLabel: yAxisLabel_Alt
+            type:'linear',
+            title: yAxisLabel_Alt
           }
-          if (chartType == NEURASIL_CHART_TYPE.STACKED_PARETO) {
-            altAxisObj.ticks.min = 0;
-            altAxisObj.ticks.max = 100;
-            altAxisObj.ticks.stepSize = 80
-          }
-          options.scales.yAxes.push(altAxisObj)
+          // if (chartType == NEURASIL_CHART_TYPE.STACKED_PARETO) {
+          //   altAxisObj.ticks.min = 0;
+          //   altAxisObj.ticks.max = 100;
+          //   altAxisObj.ticks.stepSize = 80
+          // }
+          options.scales.yAxis_alt = altAxisObj;
 
         }
       }
+      console.log(options,JSON.stringify(options))
     }
 
     let type;
@@ -251,7 +255,7 @@ export class NeurasilChartsService {
       chartType == NEURASIL_CHART_TYPE.STACKED_PARETO) {
       type = 'bar'
     } else if (chartType == NEURASIL_CHART_TYPE.HORIZONTAL_BAR) {
-      type = 'horizontalBar'
+      type = 'bar'
     } else if (chartType == NEURASIL_CHART_TYPE.PIE) {
       type = 'pie'
     }
@@ -308,6 +312,7 @@ export class NeurasilChartsService {
         return data.datasets[tooltipItem[0].datasetIndex].label;
       }
     } else if (chartType == NEURASIL_CHART_TYPE.HORIZONTAL_BAR) {
+      options.indexAxis = 'y';
       options.tooltips.callbacks.label = function (tooltipItem, data) {
 
         var label = data.datasets[tooltipItem.datasetIndex].label;
@@ -399,7 +404,7 @@ export class NeurasilChartsService {
       let yAxis = 'yAxis';
       if (useAltAxis) {
         if (i > 0) {
-          yAxis += '-alt';
+          yAxis += '_alt';
         }
       }
 
@@ -546,7 +551,7 @@ export class NeurasilChartsService {
       "borderColor":"rgba(0,0,0,0.8)",
       "borderWidth":2,
       "type":"line",
-      "yAxisID":"yAxis-alt",
+      "yAxisID":"yAxis_pareto",
       "datalabels": {
         "display":false
       },
@@ -561,7 +566,7 @@ export class NeurasilChartsService {
       "borderColor":"rgba(0,0,0,0.8)",
       "borderWidth":2,
       "type":"line",
-      "yAxisID":"yAxis-alt",
+      "yAxisID":"yAxis_pareto",
       "datalabels": {
         "display":false
       },

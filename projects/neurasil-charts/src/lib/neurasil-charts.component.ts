@@ -2,8 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, OnChang
 import { NeurasilChartsService } from './neurasil-charts.service';
 import { NEURASIL_CHART_TYPE } from './models';
 import { NeurasilDataFilter } from './pipes';
-
-import * as Chart from 'chart.js';
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables)
+// import * as Chart from 'chart.js';
 
 @Component({
   selector: 'neurasil-charts',
@@ -25,7 +26,7 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
   /**
    * User-defined default chart type
    */
-  @Input() chartType: NEURASIL_CHART_TYPE;
+  @Input() chartType: NEURASIL_CHART_TYPE = null;
   @Output() chartTypeChange = new EventEmitter();
 
   @Input() useAltAxis: boolean = true; // not sure if needed

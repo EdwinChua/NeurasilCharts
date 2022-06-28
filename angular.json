@@ -68,6 +68,14 @@
             "scripts": []
           },
           "configurations": {
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -96,7 +104,8 @@
                   "maximumError": "10kb"
                 }
               ]
-            }
+            },
+            "defaultConfiguration": "development"
           }
         },
         "serve": {
@@ -107,8 +116,12 @@
           "configurations": {
             "production": {
               "browserTarget": "neurasil-library-tester:build:production"
+            },
+            "development": {
+              "browserTarget": "neurasil-library-tester:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -160,5 +173,8 @@
         }
       }
     }},
-  "defaultProject": "neurasil-charts"
+  "defaultProject": "neurasil-charts",
+  "cli": {
+    "analytics": "eedaa5cb-233c-4f1e-83fb-31d8c0055c79"
+  }
 }

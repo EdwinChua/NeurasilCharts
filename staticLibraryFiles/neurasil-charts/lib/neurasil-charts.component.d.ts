@@ -2,6 +2,7 @@ import { OnInit, ElementRef, AfterViewInit, OnChanges, SimpleChanges, EventEmitt
 import { NeurasilChartsService } from './neurasil-charts.service';
 import { NEURASIL_CHART_TYPE } from './models';
 import { NeurasilDataFilter } from './pipes';
+import * as i0 from "@angular/core";
 export declare class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges {
     neurasilChartsService: NeurasilChartsService;
     neurasilDataFilter: NeurasilDataFilter;
@@ -38,4 +39,6 @@ export declare class NeurasilChartsComponent implements OnInit, AfterViewInit, O
     ngOnChanges(changes: SimpleChanges): void;
     updateToolbarProps(ev: any): void;
     drawChart(): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<NeurasilChartsComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<NeurasilChartsComponent, "neurasil-charts", never, { "data": "data"; "showToolbar": "showToolbar"; "chartType": "chartType"; "useAltAxis": "useAltAxis"; "chartTitle": "chartTitle"; "xAxisLabelText": "xAxisLabelText"; "yAxisLabelText_Alt": "yAxisLabelText_Alt"; "yAxisLabelText": "yAxisLabelText"; "swapLabelsAndDatasets": "swapLabelsAndDatasets"; "globalFilter": "globalFilter"; }, { "showToolbarChange": "showToolbarChange"; "chartTypeChange": "chartTypeChange"; "swapLabelsAndDatasetsChange": "swapLabelsAndDatasetsChange"; }, never, never, false>;
 }

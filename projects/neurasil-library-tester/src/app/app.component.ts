@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
     {showToolbar:true, chartType: NEURASIL_CHART_TYPE.BAR, swapLabelsAndDatasets: false},
     {showToolbar:true, chartType: NEURASIL_CHART_TYPE.BAR, swapLabelsAndDatasets: true},
     {showToolbar:true, chartType: NEURASIL_CHART_TYPE.LINE, swapLabelsAndDatasets: false},
-    {showToolbar:true, chartType: NEURASIL_CHART_TYPE.LINE, swapLabelsAndDatasets: true},
+    {showToolbar:true, chartType: NEURASIL_CHART_TYPE.STACKED_PARETO, swapLabelsAndDatasets: true},
     {showToolbar:true, chartType: NEURASIL_CHART_TYPE.PIE, swapLabelsAndDatasets: false},
     {showToolbar:true, chartType: NEURASIL_CHART_TYPE.DONUT, swapLabelsAndDatasets: true},
     {showToolbar:true, chartType: NEURASIL_CHART_TYPE.STACKED_PARETO, swapLabelsAndDatasets: false},

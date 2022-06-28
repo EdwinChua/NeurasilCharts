@@ -2,21 +2,34 @@
   "name": "neurasil-charts",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^8.2.14",
-    "@angular/core": "^8.2.14",
-    "chart.js": "^2.9.3"
+    "@angular/common": "~14.0.3",
+    "@angular/core": "~14.0.3",
+    "chart.js": "^3.8.0"
   },
-  "main": "bundles/neurasil-charts.umd.js",
-  "module": "fesm5/neurasil-charts.js",
-  "es2015": "fesm2015/neurasil-charts.js",
-  "esm5": "esm5/neurasil-charts.js",
-  "esm2015": "esm2015/neurasil-charts.js",
-  "fesm5": "fesm5/neurasil-charts.js",
-  "fesm2015": "fesm2015/neurasil-charts.js",
-  "typings": "neurasil-charts.d.ts",
-  "metadata": "neurasil-charts.metadata.json",
+  "module": "fesm2015/neurasil-charts.mjs",
+  "es2020": "fesm2020/neurasil-charts.mjs",
+  "esm2020": "esm2020/neurasil-charts.mjs",
+  "fesm2020": "fesm2020/neurasil-charts.mjs",
+  "fesm2015": "fesm2015/neurasil-charts.mjs",
+  "typings": "index.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "esm2020": "./esm2020/neurasil-charts.mjs",
+      "es2020": "./fesm2020/neurasil-charts.mjs",
+      "es2015": "./fesm2015/neurasil-charts.mjs",
+      "node": "./fesm2015/neurasil-charts.mjs",
+      "default": "./fesm2020/neurasil-charts.mjs"
+    }
+  },
   "sideEffects": false,
   "dependencies": {
-    "tslib": "^1.9.0"
+    "tslib": "^2.3.0"
+  },
+  "scripts": {
+    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled by Ivy in full compilation mode. This is not allowed.\\nPlease delete and rebuild the package with Ivy partial compilation mode, before attempting to publish.\\n')\" && exit 1"
   }
 }
