@@ -47,6 +47,15 @@ This repository consists of
 - `ng serve` to run the demo app
 - Whenever the NeurasilChart library is updated, run the .bat file to update the changes
 
+## Documentation TODO
+
+- Chart samples
+- Configurable props documentation
+
+## Enhancement
+
+- Two-way binding for click event
+
 
 ### Random side note - Build neurasil-charts command:
 
