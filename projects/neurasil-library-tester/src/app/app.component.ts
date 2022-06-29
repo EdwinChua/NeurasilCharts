@@ -74,4 +74,7 @@ export class AppComponent implements OnInit {
     console.log(event)
     this.filter = event.target.value;
   }
+  test(event){
+    console.log(event.data)
+  }
 }

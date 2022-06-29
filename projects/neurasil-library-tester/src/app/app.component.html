@@ -24,7 +24,9 @@
       [data]="data  | neurasilDataFilter : filter" 
       [(showToolbar)]="chartProps[0].showToolbar"
       [(chartType)]="chartProps[0].chartType"
-      [(swapLabelsAndDatasets)]="chartProps[0].swapLabelsAndDatasets">
+      [(swapLabelsAndDatasets)]="chartProps[0].swapLabelsAndDatasets"
+      (dataOnClick)="test($event)"
+      [globalFilter]="'john'">
     </neurasil-charts>
   </div>
 </div>
