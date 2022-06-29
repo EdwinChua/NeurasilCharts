@@ -1,5 +1,5 @@
 :: Set Project Location here 
-set "projectLocation=C:\Users\Edwin\source\repos\NeurasilCharts"
+set "projectLocation=D:\Node Projects\NeurasilCharts"
 
 cd %projectLocation%
 
