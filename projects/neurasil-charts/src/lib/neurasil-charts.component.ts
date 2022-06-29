@@ -16,31 +16,37 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
 
   @ViewChild('neurasilChartCanvas', { static: false }) canvas: ElementRef;
 
-  /**
-   * Data to plot
-   */
+  /** Data to plot */
   @Input() data: Array<any>;
-
+  /** Show hide toolbar */
   @Input() showToolbar: boolean = true;
-  @Output() showToolbarChange = new EventEmitter();
-  /**
-   * User-defined default chart type
-   */
+  /** User-defined default chart type */
   @Input() chartType: NEURASIL_CHART_TYPE = null;
-  @Output() chartTypeChange = new EventEmitter();
-
+  /** Show right axis for shits and giggles */
   @Input() useAltAxis: boolean = true; // not sure if needed
+  /** Set a chart title */
   @Input() chartTitle: string = "";
+  /** X-Axis text */
   @Input() xAxisLabelText: string = "";
-  @Input() yAxisLabelText_Alt: string = "";
+  /** Y-Axis text */
   @Input() yAxisLabelText: string = "";
-
+  /** Alt-Y-Axis text   */
+  @Input() yAxisLabelText_Alt: string = "";
+  /** Swap Dataset and Labels (TODO: find a better way to describe this) */
   @Input() swapLabelsAndDatasets: boolean;
-  @Output() swapLabelsAndDatasetsChange = new EventEmitter();
+  /** Fliter data */
   @Input() globalFilter: string = "";
 
+  /** Emits event from changing Chart type from toolbar (I think, forgot what else this does) */
+  @Output() chartTypeChange = new EventEmitter();
+   /** Forgot what this does */
+  @Output() showToolbarChange = new EventEmitter();
+  /** Emits event from toggling the swap label/data switch from toolbar (I think, forgot what else this does) */
+  @Output() swapLabelsAndDatasetsChange = new EventEmitter();
+  /** Emits data from clicked chart item */
   @Output() dataOnClick = new EventEmitter();
 
+  /** default toolbar props */
   toolbarProps = {
     chartType: this.chartType ? this.chartType : NEURASIL_CHART_TYPE.BAR,
     _datasetFilter: "",
