@@ -766,21 +766,31 @@ class NeurasilChartsComponent {
     constructor(neurasilChartsService, neurasilDataFilter) {
         this.neurasilChartsService = neurasilChartsService;
         this.neurasilDataFilter = neurasilDataFilter;
+        /** Show hide toolbar */
         this.showToolbar = true;
-        this.showToolbarChange = new EventEmitter();
-        /**
-         * User-defined default chart type
-         */
+        /** User-defined default chart type */
         this.chartType = null;
-        this.chartTypeChange = new EventEmitter();
+        /** Show right axis for shits and giggles */
         this.useAltAxis = true; // not sure if needed
+        /** Set a chart title */
         this.chartTitle = "";
+        /** X-Axis text */
         this.xAxisLabelText = "";
-        this.yAxisLabelText_Alt = "";
+        /** Y-Axis text */
         this.yAxisLabelText = "";
-        this.swapLabelsAndDatasetsChange = new EventEmitter();
+        /** Alt-Y-Axis text   */
+        this.yAxisLabelText_Alt = "";
+        /** Fliter data */
         this.globalFilter = "";
+        /** Emits event from changing Chart type from toolbar (I think, forgot what else this does) */
+        this.chartTypeChange = new EventEmitter();
+        /** Forgot what this does */
+        this.showToolbarChange = new EventEmitter();
+        /** Emits event from toggling the swap label/data switch from toolbar (I think, forgot what else this does) */
+        this.swapLabelsAndDatasetsChange = new EventEmitter();
+        /** Emits data from clicked chart item */
         this.dataOnClick = new EventEmitter();
+        /** default toolbar props */
         this.toolbarProps = {
             chartType: this.chartType ? this.chartType : NEURASIL_CHART_TYPE.BAR,
             _datasetFilter: "",
@@ -801,13 +811,13 @@ class NeurasilChartsComponent {
     }
     ngOnChanges(changes) {
         if (changes) {
-            console.log(changes);
+            // console.log(changes)
             this.drawChart();
         }
     }
     updateToolbarProps(ev) {
-        console.log(">>>", ev);
-        console.log(this.toolbarProps);
+        // console.log(">>>", ev)
+        // console.log(this.toolbarProps)
         this.chartTypeChange.emit(this.toolbarProps.chartType);
         this.showToolbarChange.emit(this.showToolbar);
         this.swapLabelsAndDatasetsChange.emit(this.toolbarProps.swapLabelsAndDatasets);
@@ -846,10 +856,6 @@ class NeurasilChartsComponent {
                             dataLabel: THIS.swapLabelsAndDatasets ? datasetLabel : xAxisVal,
                             datasetLabel: THIS.swapLabelsAndDatasets ? xAxisVal : datasetLabel
                         };
-                        // if (){
-                        //   customDataObj.dataLabel= datasetLabel;
-                        //   customDataObj.datasetLabel= xAxisVal;
-                        // }
                         let data = {
                             event: ev,
                             element: element,
@@ -873,7 +879,7 @@ class NeurasilChartsComponent {
             let _t;
             i0.ɵɵqueryRefresh(_t = i0.ɵɵloadQuery()) && (ctx.canvas = _t.first);
         }
-    }, inputs: { data: "data", showToolbar: "showToolbar", chartType: "chartType", useAltAxis: "useAltAxis", chartTitle: "chartTitle", xAxisLabelText: "xAxisLabelText", yAxisLabelText_Alt: "yAxisLabelText_Alt", yAxisLabelText: "yAxisLabelText", swapLabelsAndDatasets: "swapLabelsAndDatasets", globalFilter: "globalFilter" }, outputs: { showToolbarChange: "showToolbarChange", chartTypeChange: "chartTypeChange", swapLabelsAndDatasetsChange: "swapLabelsAndDatasetsChange", dataOnClick: "dataOnClick" }, features: [i0.ɵɵProvidersFeature([NeurasilDataFilter]), i0.ɵɵNgOnChangesFeature], decls: 6, vars: 3, consts: [[1, "component-wrapper"], ["class", "toolbar-wrapper", 4, "ngIf"], [1, "canvas-wrapper"], ["id", "neurasilChartCanvas", 3, "ngClass"], ["neurasilChartCanvas", ""], ["class", "overlay", 4, "ngIf"], [1, "toolbar-wrapper"], [3, "toolbarProps", "toolbarPropsChange"], [1, "overlay"], [1, "overlay-contents"]], template: function NeurasilChartsComponent_Template(rf, ctx) {
+    }, inputs: { data: "data", showToolbar: "showToolbar", chartType: "chartType", useAltAxis: "useAltAxis", chartTitle: "chartTitle", xAxisLabelText: "xAxisLabelText", yAxisLabelText: "yAxisLabelText", yAxisLabelText_Alt: "yAxisLabelText_Alt", swapLabelsAndDatasets: "swapLabelsAndDatasets", globalFilter: "globalFilter" }, outputs: { chartTypeChange: "chartTypeChange", showToolbarChange: "showToolbarChange", swapLabelsAndDatasetsChange: "swapLabelsAndDatasetsChange", dataOnClick: "dataOnClick" }, features: [i0.ɵɵProvidersFeature([NeurasilDataFilter]), i0.ɵɵNgOnChangesFeature], decls: 6, vars: 3, consts: [[1, "component-wrapper"], ["class", "toolbar-wrapper", 4, "ngIf"], [1, "canvas-wrapper"], ["id", "neurasilChartCanvas", 3, "ngClass"], ["neurasilChartCanvas", ""], ["class", "overlay", 4, "ngIf"], [1, "toolbar-wrapper"], [3, "toolbarProps", "toolbarPropsChange"], [1, "overlay"], [1, "overlay-contents"]], template: function NeurasilChartsComponent_Template(rf, ctx) {
         if (rf & 1) {
             i0.ɵɵelementStart(0, "div", 0);
             i0.ɵɵtemplate(1, NeurasilChartsComponent_div_1_Template, 2, 1, "div", 1);
@@ -902,28 +908,28 @@ class NeurasilChartsComponent {
                 type: Input
             }], showToolbar: [{
                 type: Input
-            }], showToolbarChange: [{
-                type: Output
             }], chartType: [{
                 type: Input
-            }], chartTypeChange: [{
-                type: Output
             }], useAltAxis: [{
                 type: Input
             }], chartTitle: [{
                 type: Input
             }], xAxisLabelText: [{
                 type: Input
-            }], yAxisLabelText_Alt: [{
-                type: Input
             }], yAxisLabelText: [{
+                type: Input
+            }], yAxisLabelText_Alt: [{
                 type: Input
             }], swapLabelsAndDatasets: [{
                 type: Input
-            }], swapLabelsAndDatasetsChange: [{
-                type: Output
             }], globalFilter: [{
                 type: Input
+            }], chartTypeChange: [{
+                type: Output
+            }], showToolbarChange: [{
+                type: Output
+            }], swapLabelsAndDatasetsChange: [{
+                type: Output
             }], dataOnClick: [{
                 type: Output
             }] });
