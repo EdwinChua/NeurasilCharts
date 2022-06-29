@@ -174,7 +174,7 @@ export class NeurasilChartsService {
       xAxisLabel.display = true;
       xAxisLabel.text = xAxisLabelText;
     }
-    console.log("here", yAxisLabel)
+
     if (chartType != NEURASIL_CHART_TYPE.PIE && chartType != NEURASIL_CHART_TYPE.DONUT) {
       if (chartType == NEURASIL_CHART_TYPE.STACKED || chartType == NEURASIL_CHART_TYPE.STACKED_PARETO) {
 
@@ -243,7 +243,6 @@ export class NeurasilChartsService {
 
         }
       }
-      console.log(options,JSON.stringify(options))
     }
 
     let type;
