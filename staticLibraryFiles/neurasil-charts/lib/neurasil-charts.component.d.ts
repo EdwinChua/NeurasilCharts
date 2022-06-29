@@ -26,6 +26,7 @@ export declare class NeurasilChartsComponent implements OnInit, AfterViewInit, O
     swapLabelsAndDatasets: boolean;
     swapLabelsAndDatasetsChange: EventEmitter<any>;
     globalFilter: string;
+    dataOnClick: EventEmitter<any>;
     toolbarProps: {
         chartType: NEURASIL_CHART_TYPE;
         _datasetFilter: string;
@@ -40,5 +41,5 @@ export declare class NeurasilChartsComponent implements OnInit, AfterViewInit, O
     updateToolbarProps(ev: any): void;
     drawChart(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<NeurasilChartsComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<NeurasilChartsComponent, "neurasil-charts", never, { "data": "data"; "showToolbar": "showToolbar"; "chartType": "chartType"; "useAltAxis": "useAltAxis"; "chartTitle": "chartTitle"; "xAxisLabelText": "xAxisLabelText"; "yAxisLabelText_Alt": "yAxisLabelText_Alt"; "yAxisLabelText": "yAxisLabelText"; "swapLabelsAndDatasets": "swapLabelsAndDatasets"; "globalFilter": "globalFilter"; }, { "showToolbarChange": "showToolbarChange"; "chartTypeChange": "chartTypeChange"; "swapLabelsAndDatasetsChange": "swapLabelsAndDatasetsChange"; }, never, never, false>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<NeurasilChartsComponent, "neurasil-charts", never, { "data": "data"; "showToolbar": "showToolbar"; "chartType": "chartType"; "useAltAxis": "useAltAxis"; "chartTitle": "chartTitle"; "xAxisLabelText": "xAxisLabelText"; "yAxisLabelText_Alt": "yAxisLabelText_Alt"; "yAxisLabelText": "yAxisLabelText"; "swapLabelsAndDatasets": "swapLabelsAndDatasets"; "globalFilter": "globalFilter"; }, { "showToolbarChange": "showToolbarChange"; "chartTypeChange": "chartTypeChange"; "swapLabelsAndDatasetsChange": "swapLabelsAndDatasetsChange"; "dataOnClick": "dataOnClick"; }, never, never, false>;
 }
