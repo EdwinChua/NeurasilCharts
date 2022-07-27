@@ -15,15 +15,15 @@ export class AppComponent implements OnInit {
   filter = "";
   data:Array<any>; 
   data2:Array<any>;
-  layout = 5;
+  layout = 1;
   displayStr = "";
   chartProps: Array<any> = [
-    {showToolbar:true, chartType: NEURASIL_CHART_TYPE.BAR, swapLabelsAndDatasets: false},
-    {showToolbar:true, chartType: NEURASIL_CHART_TYPE.BAR, swapLabelsAndDatasets: true},
-    {showToolbar:true, chartType: NEURASIL_CHART_TYPE.LINE, swapLabelsAndDatasets: false},
-    {showToolbar:true, chartType: NEURASIL_CHART_TYPE.STACKED_PARETO, swapLabelsAndDatasets: true},
-    {showToolbar:true, chartType: NEURASIL_CHART_TYPE.PIE, swapLabelsAndDatasets: false},
-    {showToolbar:true, chartType: NEURASIL_CHART_TYPE.DONUT, swapLabelsAndDatasets: true},
+    {showToolbar:false, chartType: NEURASIL_CHART_TYPE.BAR, swapLabelsAndDatasets: false},
+    {showToolbar:false, chartType: NEURASIL_CHART_TYPE.BAR, swapLabelsAndDatasets: true},
+    {showToolbar:false, chartType: NEURASIL_CHART_TYPE.LINE, swapLabelsAndDatasets: false},
+    {showToolbar:false, chartType: NEURASIL_CHART_TYPE.STACKED_PARETO, swapLabelsAndDatasets: true},
+    {showToolbar:false, chartType: NEURASIL_CHART_TYPE.PIE, swapLabelsAndDatasets: false},
+    {showToolbar:false, chartType: NEURASIL_CHART_TYPE.DONUT, swapLabelsAndDatasets: true},
     {showToolbar:true, chartType: NEURASIL_CHART_TYPE.STACKED_PARETO, swapLabelsAndDatasets: false},
     {showToolbar:true, chartType: NEURASIL_CHART_TYPE.STACKED_PARETO, swapLabelsAndDatasets: true},
     {showToolbar:true, chartType: NEURASIL_CHART_TYPE.HORIZONTAL_BAR, swapLabelsAndDatasets: false}

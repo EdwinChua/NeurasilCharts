@@ -4,7 +4,7 @@
   placeholder="or manually paste JSON or CSV string. JSON eg. [{key:val, key2:val2}, {...}, ...]"></textarea>
 <br>
 
-<button (click)="btnClick()">Visualize Own Data</button>
+<button (click)="btnClick($event)">Visualize Own Data</button>
 <br>
 <input type="text" [value]="filter" (change)="updateFilter($event)" />
 <br>
@@ -26,11 +26,12 @@
       [(chartType)]="chartProps[0].chartType"
       [(swapLabelsAndDatasets)]="chartProps[0].swapLabelsAndDatasets"
       (dataOnClick)="test($event)"
-      [globalFilter]="'john'">
+      [globalFilter]=""
+      [xAxisLabelText]="' '"
+      [showDataLabels]="false">
     </neurasil-charts>
   </div>
 </div>
-
 
 <div *ngIf="layout == 2" class="wrapper2x">
   <div *ngIf="data" class="grid-cell">
@@ -112,7 +113,8 @@
           [data]="data  | neurasilDataFilter : filter" 
           [(showToolbar)]="chartProps[0].showToolbar"
           [(chartType)]="chartProps[0].chartType"
-          [(swapLabelsAndDatasets)]="chartProps[0].swapLabelsAndDatasets">
+          [(swapLabelsAndDatasets)]="chartProps[0].swapLabelsAndDatasets"
+          [showDataLabels]="true">
         </neurasil-charts>
       </div>
       <div *ngIf="data" class="grid-cell  ">
