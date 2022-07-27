@@ -4,7 +4,12 @@ import { NEURASIL_CHART_TYPE } from './models';
 import { NeurasilDataFilter } from './pipes';
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables)
-// import * as Chart from 'chart.js';
+// import Chart from 'chart.js/auto';
+import { HostListener } from '@angular/core';
+
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
+
 
 @Component({
   selector: 'neurasil-charts',
@@ -32,14 +37,22 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
   @Input() yAxisLabelText: string = "";
   /** Alt-Y-Axis text   */
   @Input() yAxisLabelText_Alt: string = "";
-  /** Swap Dataset and Labels (TODO: find a better way to describe this) */
+  /** Swap Dataset and Labels 
+   * @
+   */
   @Input() swapLabelsAndDatasets: boolean;
-  /** Fliter data */
+  /** Filter data */
   @Input() globalFilter: string = "";
+  /** Show data labels 
+   * @param showDataLabels default: false
+  */
+  @Input() showDataLabels: boolean = false;
+
+  @Input() noDataMessage: string = "No data to display. Check your filters.";
 
   /** Emits event from changing Chart type from toolbar (I think, forgot what else this does) */
   @Output() chartTypeChange = new EventEmitter();
-   /** Forgot what this does */
+  /** Forgot what this does */
   @Output() showToolbarChange = new EventEmitter();
   /** Emits event from toggling the swap label/data switch from toolbar (I think, forgot what else this does) */
   @Output() swapLabelsAndDatasetsChange = new EventEmitter();
@@ -53,7 +66,7 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
     swapLabelsAndDatasets: false
   };
 
-  _canvas: any;
+  public _canvas: any;
   hasData: boolean; // for the purpose of checking length in html template
 
 
@@ -79,10 +92,17 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
       this.drawChart();
     }
   }
+  @HostListener('window:beforeprint', ['$event'])
+  onBeforePrint(event) {
+    // this.drawChart(true)
 
+  }
+  @HostListener('window:afterprint', ['$event'])
+  onAfterPrint(event) {
+    // this.drawChart(false);
+  }
   updateToolbarProps(ev) {
-    // console.log(">>>", ev)
-    // console.log(this.toolbarProps)
+
     this.chartTypeChange.emit(this.toolbarProps.chartType);
     this.showToolbarChange.emit(this.showToolbar);
     this.swapLabelsAndDatasetsChange.emit(this.toolbarProps.swapLabelsAndDatasets)
@@ -90,7 +110,7 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
   }
 
 
-  drawChart() {
+  drawChart(isPrinting:boolean =false) {
     if (this._canvas) {
       this._canvas.destroy();
     }
@@ -105,7 +125,9 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
       this.hasData = (filteredData && filteredData.length > 0);
       if (this.hasData) {
         let o = this.neurasilChartsService.parseDataFromDatasource(this.toolbarProps.chartType, filteredData, this.toolbarProps.swapLabelsAndDatasets);
+        // console.log("o",o)
         let props = this.neurasilChartsService.chartObjectBuilder(this.toolbarProps.chartType, o.data, this.useAltAxis, this.chartTitle, this.yAxisLabelText, this.yAxisLabelText_Alt, this.xAxisLabelText, o._cornerstone, this.toolbarProps.swapLabelsAndDatasets, o._formatObject);
+        
         if (this.toolbarProps.chartType == NEURASIL_CHART_TYPE.STACKED_PARETO) {
           this.neurasilChartsService.performParetoAnalysis(props); // modify chart props object
         }
@@ -122,7 +144,7 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
             let customDataObj = {
               val: datasetVal,
               dataLabel: THIS.swapLabelsAndDatasets ? datasetLabel : xAxisVal,
-              datasetLabel:THIS.swapLabelsAndDatasets ? xAxisVal : datasetLabel
+              datasetLabel: THIS.swapLabelsAndDatasets ? xAxisVal : datasetLabel
             }
             let data = {
               event: ev,
@@ -133,6 +155,24 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
             THIS.dataOnClick.emit(data)
           }
         }
+        if (this.showDataLabels || isPrinting){
+          props.plugins.push(ChartDataLabels);
+        }
+        if (!props.options.plugins) {
+          props.options.plugins = {}
+        }
+        props.options.plugins.datalabels = {
+          formatter: function(value, context) {
+            //return Math.round(value*100) + '%';
+            if ((value > 0 && value > 0.001) || (value < 0 && value < -0.001)) {
+              return Math.round(value * 1000) / 1000;
+            } else {
+              return value;
+            }
+        }
+      }
+        // console.log("ctx",ctx)
+        // console.log("props",props)
         this._canvas = new Chart(ctx, props);
       }
     }

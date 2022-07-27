@@ -30,7 +30,7 @@ export class NeurasilChartsService {
         cDat[k_arr[i]].push(data[j][currKey]);
       }
     }
-
+    // console.log(cDat)
 
     let formatObj = {};
     let k_arr_new = Object.keys(cDat);
@@ -130,7 +130,7 @@ export class NeurasilChartsService {
 
     returnData._formatObject = formatObj;
     returnData.data = cDat;
-    //console.log(cDat);
+    // console.log(returnData);
     return returnData;
   }
 
@@ -169,12 +169,16 @@ export class NeurasilChartsService {
       yAxisLabel_Alt.text = yAxisLabelText_Alt;
     }
 
-    let xAxisLabel = { display: false, text: "" };
+    let xAxisLabel = { display: false, text: null };
     if (xAxisLabelText) {
       xAxisLabel.display = true;
       xAxisLabel.text = xAxisLabelText;
     }
-
+    else {
+      xAxisLabel.display = true;
+      xAxisLabel.text = [" ", " "];
+    }
+    // console.log(xAxisLabelText)
     if (chartType != NEURASIL_CHART_TYPE.PIE && chartType != NEURASIL_CHART_TYPE.DONUT) {
       if (chartType == NEURASIL_CHART_TYPE.STACKED || chartType == NEURASIL_CHART_TYPE.STACKED_PARETO) {
 
@@ -337,6 +341,7 @@ export class NeurasilChartsService {
 
 
     let returnOpts = {
+      plugins:[],
       type: type,
       data: this.dataParser(chartData, useAltAxis, chartType, cornerstone, swapLabelsAndDatasets),
       options: options
@@ -379,13 +384,16 @@ export class NeurasilChartsService {
     }
 
     let colorPalatte;
-    let bgColorPalatte
+    let bgColorPalatte;
+    let bgColorPalatte_hover;
     if (!swapLabelsAndDatasets) {
       colorPalatte = getPalette(1, chartData[cornerstone].length)
       bgColorPalatte = getPalette(0.3, chartData[cornerstone].length)
+      bgColorPalatte_hover = getPalette(0.5, chartData[cornerstone].length)
     } else {
       colorPalatte = getPalette(1, Object.keys(chartData).length)
       bgColorPalatte = getPalette(0.3, Object.keys(chartData).length)
+      bgColorPalatte_hover = getPalette(0.5,  Object.keys(chartData).length)
     }
 
 
@@ -406,16 +414,18 @@ export class NeurasilChartsService {
           yAxis += '_alt';
         }
       }
-
+      // console.log(objKeys[i])
       let dataSet: any = {
         label: objKeys[i],
         data: chartData[objKeys[i]],
         backgroundColor: bgColorPalatte[i],
         borderColor: colorPalatte[i],
+        hoverBackgroundColor: bgColorPalatte_hover[i],
+        hoverBorderColor: colorPalatte[i],
         borderWidth: 2
       };
 
-
+      // console.log(dataSet)
       if (chartType == NEURASIL_CHART_TYPE.BAR_LINE) { // ignores stacked and bar options. Makes assumption that only 1st dataset is bar
         if (i == 0) {
           dataSet.type = 'bar';
@@ -430,10 +440,14 @@ export class NeurasilChartsService {
       if (chartType == NEURASIL_CHART_TYPE.BAR || chartType == NEURASIL_CHART_TYPE.HORIZONTAL_BAR || chartType == NEURASIL_CHART_TYPE.STACKED || chartType == NEURASIL_CHART_TYPE.STACKED_PARETO) {
         dataSet.backgroundColor = bgColorPalatte[i];
         dataSet.borderColor = colorPalatte[i];
+        dataSet.hoverBackgroundColor = bgColorPalatte_hover[i];
+        dataSet.hoverBorderColor = colorPalatte[i];
       } else if (chartType == NEURASIL_CHART_TYPE.BAR_LINE || chartType == NEURASIL_CHART_TYPE.LINE) {
         if (dataSet.type == 'bar') {
           dataSet.backgroundColor = bgColorPalatte[i];
           dataSet.borderColor = colorPalatte[i];
+          dataSet.hoverBackgroundColor = bgColorPalatte_hover[i];
+          dataSet.hoverBorderColor = colorPalatte[i];
         } else {
           dataSet.borderColor = colorPalatte[i];
           dataSet.backgroundColor = 'rgba(0,0,0,0)';
@@ -441,6 +455,8 @@ export class NeurasilChartsService {
       } else if (chartType == NEURASIL_CHART_TYPE.PIE || chartType == NEURASIL_CHART_TYPE.DONUT) {// overwrite single color assignment to array.
         dataSet.backgroundColor = bgColorPalatte;
         dataSet.borderColor = colorPalatte;
+        dataSet.hoverBackgroundColor = bgColorPalatte_hover;
+        dataSet.hoverBorderColor = colorPalatte;
       }
 
 
