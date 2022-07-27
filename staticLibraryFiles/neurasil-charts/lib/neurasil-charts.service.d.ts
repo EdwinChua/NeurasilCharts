@@ -11,6 +11,7 @@ export declare class NeurasilChartsService {
         data: Array<any>;
     };
     chartObjectBuilder(chartType: any, chartData: any, useAltAxis: any, title: any, yAxisLabelText: any, yAxisLabelText_Alt: any, xAxisLabelText: any, cornerstone: any, swapLabelsAndDatasets: any, formatObject: any): {
+        plugins: any[];
         type: any;
         data: {
             labels: any;
