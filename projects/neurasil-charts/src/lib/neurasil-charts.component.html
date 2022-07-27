@@ -7,7 +7,7 @@
         <canvas [ngClass]="hasData ? '' : 'canvas-hidden'" #neurasilChartCanvas id="neurasilChartCanvas"></canvas>
         <div class="overlay" *ngIf="!hasData">
             <div class="overlay-contents">
-                No data to display. Check your filters.
+                {{noDataMessage}}
             </div>
         </div>
     </div>
