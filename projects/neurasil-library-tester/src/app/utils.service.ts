@@ -9,7 +9,7 @@ export class UtilsService {
   generateSampleData():Array<any>{
     let arr = [];
     //let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    let users = ['John', 'Mary','James','Jenny','Alvin','Nandine'];
+    let users = [[["John","test"],["LLL"],["Test"]], [['Mary'],["test"]],['James'],['Jenny'],['Alvin'],['Nandine']];
     let projects = ['Science','English', 'Math','History']
 
     for (let i in users){
@@ -17,7 +17,7 @@ export class UtilsService {
         user: users[i]
       }
       for (let j in projects){
-        let score =  Math.floor(Math.random() *100)
+        let score =  Math.floor(Math.random() *100000)/1000
         if (score < 50)
           score += 50;
         o[projects[j]] =score
