@@ -52,15 +52,138 @@ This repository consists of
 - Chart samples
 - Configurable props documentation
 
-## Enhancement
-
-- Two-way binding for click event
-
 
 ### Random side note - Build neurasil-charts command:
 
 ````shell
 ng build neurasil-charts
+````
+
+## How to use other plugins
+
+`YourComponentUsingNeurasilCharts.ts`
+````ts
+// import and register plugin 
+import zoomPlugin from 'chartjs-plugin-zoom';
+Chart.register(zoomPlugin);
+
+export class YourComponentUsingNeurasilCharts {
+   // pass this object to the chart component
+   additionalPluginOpts = {
+      zoom: {
+         ...
+      }
+  }
+}
+
+````
+
+`YourComponentUsingNeurasilCharts.html`
+````html
+<neurasil-charts 
+   ...
+   [additionalPluginOpts]="additionalPluginOpts">
+</neurasil-charts>
+````
+
+## How to access click events
+`YourComponentUsingNeurasilCharts.html`
+````html
+<neurasil-charts 
+   ...
+   (dataOnClick)="propagateClick($event)">
+</neurasil-charts>
+````
+
+## Enhancement
+
+- Click to select a data point
+   - multiselect feature?
+   - checkbox like thingy
+   - shading of selected points
+
+### Sample code to use the above feature
+
+````ts
+  resetColor(event) {
+    let ele = event.element[0];
+    let datasets = event.chartInstance.data.datasets;
+    try {
+      for (let i in datasets) {
+        for (var j in datasets[i].backgroundColor) {
+          datasets[i].backgroundColor[j] = this.changeRGBAOpacity(datasets[i].backgroundColor[j], 0.5)
+          datasets[i].hoverBackgroundColor[j] = this.changeRGBAOpacity(datasets[i].backgroundColor[j], 0.3)
+          datasets[i].borderColor[j] = this.changeRGBAOpacity(datasets[i].borderColor[j], 1)
+          datasets[i].hoverBorderColor[j] = this.changeRGBAOpacity(datasets[i].hoverBorderColor[j], 1)
+        }
+      }
+    } catch (e) {
+      //means barchart, only single color string in property. Set to array
+      let size = datasets[ele.datasetIndex].data.length;
+      let newColorArr = [];
+      let newHoverColorArr = [];
+      let borderColorArr = [];
+      let hoverBorderColorArr = [];
+      for (let i = 0; i < size; i++) {
+        newColorArr.push(this.changeRGBAOpacity(datasets[ele.datasetIndex].backgroundColor, 0.5));
+        newHoverColorArr.push(this.changeRGBAOpacity(datasets[ele.datasetIndex].backgroundColor, 0.3));
+        borderColorArr.push(this.changeRGBAOpacity(datasets[ele.datasetIndex].borderColor, 1));
+        hoverBorderColorArr.push(this.changeRGBAOpacity(datasets[ele.datasetIndex].hoverBorderColor, 1));
+      }
+      datasets[ele.datasetIndex].backgroundColor = newColorArr;
+      datasets[ele.datasetIndex].hoverBackgroundColor = newHoverColorArr;
+      datasets[ele.datasetIndex].borderColor = borderColorArr;
+      datasets[ele.datasetIndex].hoverBorderColor = hoverBorderColorArr;
+    }
+    event.chartInstance.update();
+  }
+  setColor(event) {
+    let ele = event.element[0];
+    let datasets = event.chartInstance.data.datasets;
+    try {
+      for (let i in datasets) {
+        for (var j in datasets[i].backgroundColor) {
+          datasets[i].backgroundColor[j] = this.changeRGBAOpacity(datasets[i].backgroundColor[j], 0.2)
+          datasets[i].hoverBackgroundColor[j] = this.changeRGBAOpacity(datasets[i].backgroundColor[j], 0.2)
+          datasets[i].borderColor[j] = this.changeRGBAOpacity(datasets[i].borderColor[j], 0.2)
+          datasets[i].hoverBorderColor[j] = this.changeRGBAOpacity(datasets[i].hoverBorderColor[j], 0.2)
+        }
+      }
+    } catch (error) {
+      //means barchart, only single color string in property. Set to array
+      let size = datasets[ele.datasetIndex].data.length;
+      let newColorArr = [];
+      let newHoverColorArr = [];
+      let borderColorArr = [];
+      let hoverBorderColorArr = [];
+      for (let i = 0; i < size; i++) {
+        newColorArr.push(this.changeRGBAOpacity(datasets[ele.datasetIndex].backgroundColor, 0.2));
+        newHoverColorArr.push(this.changeRGBAOpacity(datasets[ele.datasetIndex].backgroundColor, 0.2));
+        borderColorArr.push(this.changeRGBAOpacity(datasets[ele.datasetIndex].borderColor, 0.2));
+        hoverBorderColorArr.push(this.changeRGBAOpacity(datasets[ele.datasetIndex].hoverBorderColor, 0.2));
+      }
+      datasets[ele.datasetIndex].backgroundColor = newColorArr;
+      datasets[ele.datasetIndex].hoverBackgroundColor = newHoverColorArr;
+      datasets[ele.datasetIndex].borderColor = borderColorArr;
+      datasets[ele.datasetIndex].hoverBorderColor = hoverBorderColorArr;
+    }
+    datasets[ele.datasetIndex].backgroundColor[ele.index] = this.changeRGBAOpacity(datasets[ele.datasetIndex].backgroundColor[ele.index], 0.9)
+    datasets[ele.datasetIndex].hoverBackgroundColor[ele.index] = this.changeRGBAOpacity(datasets[ele.datasetIndex].backgroundColor[ele.index], 0.9)
+    datasets[ele.datasetIndex].borderColor[ele.index] = this.changeRGBAOpacity(datasets[ele.datasetIndex].borderColor[ele.index], 1)
+    datasets[ele.datasetIndex].hoverBorderColor[ele.index] = this.changeRGBAOpacity(datasets[ele.datasetIndex].hoverBorderColor[ele.index], 1)
+
+    event.chartInstance.update();
+  }
+  changeRGBAOpacity(colorStr, opacity) {
+    let colorArr = this.getRGBFromRGBA(colorStr);
+    let r = colorArr[0];
+    let g = colorArr[1];
+    let b = colorArr[2];
+    return `rgba(${r},${g},${b},${opacity})`;
+  }
+  getRGBFromRGBA(str) {
+    return str.toLowerCase().replace("rgba(", "").replace(")", "").split(",");
+  }
 ````
 
 ## Some other stuff I want to put somewhere

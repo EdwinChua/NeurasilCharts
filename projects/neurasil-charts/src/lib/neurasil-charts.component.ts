@@ -50,6 +50,8 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
 
   @Input() noDataMessage: string = "No data to display. Check your filters.";
 
+  @Input() additionalPluginOpts = {};
+
   /** Emits event from changing Chart type from toolbar (I think, forgot what else this does) */
   @Output() chartTypeChange = new EventEmitter();
   /** Forgot what this does */
@@ -110,7 +112,7 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
   }
 
 
-  drawChart(isPrinting:boolean =false) {
+  drawChart(isPrinting: boolean = false) {
     if (this._canvas) {
       this._canvas.destroy();
     }
@@ -127,7 +129,7 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
         let o = this.neurasilChartsService.parseDataFromDatasource(this.toolbarProps.chartType, filteredData, this.toolbarProps.swapLabelsAndDatasets);
         // console.log("o",o)
         let props = this.neurasilChartsService.chartObjectBuilder(this.toolbarProps.chartType, o.data, this.useAltAxis, this.chartTitle, this.yAxisLabelText, this.yAxisLabelText_Alt, this.xAxisLabelText, o._cornerstone, this.toolbarProps.swapLabelsAndDatasets, o._formatObject);
-        
+
         if (this.toolbarProps.chartType == NEURASIL_CHART_TYPE.STACKED_PARETO) {
           this.neurasilChartsService.performParetoAnalysis(props); // modify chart props object
         }
@@ -155,22 +157,66 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
             THIS.dataOnClick.emit(data)
           }
         }
-        if (this.showDataLabels || isPrinting){
+        if (this.showDataLabels || isPrinting) {
           props.plugins.push(ChartDataLabels);
         }
         if (!props.options.plugins) {
           props.options.plugins = {}
         }
-        props.options.plugins.datalabels = {
-          formatter: function(value, context) {
-            //return Math.round(value*100) + '%';
-            if ((value > 0 && value > 0.001) || (value < 0 && value < -0.001)) {
-              return Math.round(value * 1000) / 1000;
-            } else {
-              return value;
-            }
+        if (this.additionalPluginOpts){
+          props.options.plugins = this.additionalPluginOpts;
         }
-      }
+        props.options.plugins.datalabels = {
+          formatter: function (value, context) {
+            //return Math.round(value*100) + '%';
+            if ((value > 0 && value >= 0.001) || (value < 0 && value < -0.001)) {
+              return Math.round(value * 1000) / 1000;
+            } else if (value > 0 && value < 0.001) {
+              return "< 0.001";
+            } else {
+              return "> -0.001";
+            }
+          }
+        }
+        if (this.chartType == NEURASIL_CHART_TYPE.DONUT || this.chartType == NEURASIL_CHART_TYPE.PIE) {
+          props.options.plugins.tooltip = {
+            callbacks: {
+              title: function(tooltipItem) {
+                // TODO: could be an issue with multiple datasets
+                return tooltipItem[0].label;
+              },
+              label: function(tooltipItem) {
+                let label = tooltipItem.dataset.label || '';
+                if (label) {
+                  label += ': ';
+                }
+                if (tooltipItem.parsed.y !== null) {
+                  label += `${tooltipItem.parsed}`;
+                }
+                return label;
+              },
+              
+            }
+          }
+        } else {
+          props.options.plugins.tooltip = {
+            callbacks: {
+              label: function (context) {
+                let label = context.dataset.label || '';
+
+                if (label) {
+                  label += ': ';
+                }
+                if (context.parsed.y !== null) {
+                  label += `${context.parsed.y}`;
+                }
+                return label;
+              }
+            }
+          }
+        }
+
+
         // console.log("ctx",ctx)
         // console.log("props",props)
         this._canvas = new Chart(ctx, props);
