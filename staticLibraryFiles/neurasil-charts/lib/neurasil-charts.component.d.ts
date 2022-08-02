@@ -34,6 +34,7 @@ export declare class NeurasilChartsComponent implements OnInit, AfterViewInit, O
     */
     showDataLabels: boolean;
     noDataMessage: string;
+    additionalPluginOpts: {};
     /** Emits event from changing Chart type from toolbar (I think, forgot what else this does) */
     chartTypeChange: EventEmitter<any>;
     /** Forgot what this does */
@@ -59,5 +60,5 @@ export declare class NeurasilChartsComponent implements OnInit, AfterViewInit, O
     updateToolbarProps(ev: any): void;
     drawChart(isPrinting?: boolean): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<NeurasilChartsComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<NeurasilChartsComponent, "neurasil-charts", never, { "data": "data"; "showToolbar": "showToolbar"; "chartType": "chartType"; "useAltAxis": "useAltAxis"; "chartTitle": "chartTitle"; "xAxisLabelText": "xAxisLabelText"; "yAxisLabelText": "yAxisLabelText"; "yAxisLabelText_Alt": "yAxisLabelText_Alt"; "swapLabelsAndDatasets": "swapLabelsAndDatasets"; "globalFilter": "globalFilter"; "showDataLabels": "showDataLabels"; "noDataMessage": "noDataMessage"; }, { "chartTypeChange": "chartTypeChange"; "showToolbarChange": "showToolbarChange"; "swapLabelsAndDatasetsChange": "swapLabelsAndDatasetsChange"; "dataOnClick": "dataOnClick"; }, never, never, false>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<NeurasilChartsComponent, "neurasil-charts", never, { "data": "data"; "showToolbar": "showToolbar"; "chartType": "chartType"; "useAltAxis": "useAltAxis"; "chartTitle": "chartTitle"; "xAxisLabelText": "xAxisLabelText"; "yAxisLabelText": "yAxisLabelText"; "yAxisLabelText_Alt": "yAxisLabelText_Alt"; "swapLabelsAndDatasets": "swapLabelsAndDatasets"; "globalFilter": "globalFilter"; "showDataLabels": "showDataLabels"; "noDataMessage": "noDataMessage"; "additionalPluginOpts": "additionalPluginOpts"; }, { "chartTypeChange": "chartTypeChange"; "showToolbarChange": "showToolbarChange"; "swapLabelsAndDatasetsChange": "swapLabelsAndDatasetsChange"; "dataOnClick": "dataOnClick"; }, never, never, false>;
 }

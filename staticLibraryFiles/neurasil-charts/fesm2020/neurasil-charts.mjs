@@ -797,6 +797,7 @@ class NeurasilChartsComponent {
         */
         this.showDataLabels = false;
         this.noDataMessage = "No data to display. Check your filters.";
+        this.additionalPluginOpts = {};
         /** Emits event from changing Chart type from toolbar (I think, forgot what else this does) */
         this.chartTypeChange = new EventEmitter();
         /** Forgot what this does */
@@ -891,17 +892,59 @@ class NeurasilChartsComponent {
                 if (!props.options.plugins) {
                     props.options.plugins = {};
                 }
+                if (this.additionalPluginOpts) {
+                    props.options.plugins = this.additionalPluginOpts;
+                }
                 props.options.plugins.datalabels = {
                     formatter: function (value, context) {
                         //return Math.round(value*100) + '%';
-                        if ((value > 0 && value > 0.001) || (value < 0 && value < -0.001)) {
+                        if ((value > 0 && value >= 0.001) || (value < 0 && value < -0.001)) {
                             return Math.round(value * 1000) / 1000;
                         }
+                        else if (value > 0 && value < 0.001) {
+                            return "< 0.001";
+                        }
                         else {
-                            return value;
+                            return "> -0.001";
                         }
                     }
                 };
+                if (this.chartType == NEURASIL_CHART_TYPE.DONUT || this.chartType == NEURASIL_CHART_TYPE.PIE) {
+                    props.options.plugins.tooltip = {
+                        callbacks: {
+                            title: function (tooltipItem) {
+                                // TODO: could be an issue with multiple datasets
+                                return tooltipItem[0].label;
+                            },
+                            label: function (tooltipItem) {
+                                let label = tooltipItem.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (tooltipItem.parsed.y !== null) {
+                                    label += `${tooltipItem.parsed}`;
+                                }
+                                return label;
+                            },
+                        }
+                    };
+                }
+                else {
+                    props.options.plugins.tooltip = {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += `${context.parsed.y}`;
+                                }
+                                return label;
+                            }
+                        }
+                    };
+                }
                 // console.log("ctx",ctx)
                 // console.log("props",props)
                 this._canvas = new Chart(ctx, props);
@@ -917,7 +960,7 @@ class NeurasilChartsComponent {
         i0.ɵɵqueryRefresh(_t = i0.ɵɵloadQuery()) && (ctx.canvas = _t.first);
     } }, hostBindings: function NeurasilChartsComponent_HostBindings(rf, ctx) { if (rf & 1) {
         i0.ɵɵlistener("beforeprint", function NeurasilChartsComponent_beforeprint_HostBindingHandler($event) { return ctx.onBeforePrint($event); }, false, i0.ɵɵresolveWindow)("afterprint", function NeurasilChartsComponent_afterprint_HostBindingHandler($event) { return ctx.onAfterPrint($event); }, false, i0.ɵɵresolveWindow);
-    } }, inputs: { data: "data", showToolbar: "showToolbar", chartType: "chartType", useAltAxis: "useAltAxis", chartTitle: "chartTitle", xAxisLabelText: "xAxisLabelText", yAxisLabelText: "yAxisLabelText", yAxisLabelText_Alt: "yAxisLabelText_Alt", swapLabelsAndDatasets: "swapLabelsAndDatasets", globalFilter: "globalFilter", showDataLabels: "showDataLabels", noDataMessage: "noDataMessage" }, outputs: { chartTypeChange: "chartTypeChange", showToolbarChange: "showToolbarChange", swapLabelsAndDatasetsChange: "swapLabelsAndDatasetsChange", dataOnClick: "dataOnClick" }, features: [i0.ɵɵProvidersFeature([NeurasilDataFilter]), i0.ɵɵNgOnChangesFeature], decls: 6, vars: 3, consts: [[1, "component-wrapper"], ["class", "toolbar-wrapper", 4, "ngIf"], [1, "canvas-wrapper"], ["id", "neurasilChartCanvas", 3, "ngClass"], ["neurasilChartCanvas", ""], ["class", "overlay", 4, "ngIf"], [1, "toolbar-wrapper"], [3, "toolbarProps", "toolbarPropsChange"], [1, "overlay"], [1, "overlay-contents"]], template: function NeurasilChartsComponent_Template(rf, ctx) { if (rf & 1) {
+    } }, inputs: { data: "data", showToolbar: "showToolbar", chartType: "chartType", useAltAxis: "useAltAxis", chartTitle: "chartTitle", xAxisLabelText: "xAxisLabelText", yAxisLabelText: "yAxisLabelText", yAxisLabelText_Alt: "yAxisLabelText_Alt", swapLabelsAndDatasets: "swapLabelsAndDatasets", globalFilter: "globalFilter", showDataLabels: "showDataLabels", noDataMessage: "noDataMessage", additionalPluginOpts: "additionalPluginOpts" }, outputs: { chartTypeChange: "chartTypeChange", showToolbarChange: "showToolbarChange", swapLabelsAndDatasetsChange: "swapLabelsAndDatasetsChange", dataOnClick: "dataOnClick" }, features: [i0.ɵɵProvidersFeature([NeurasilDataFilter]), i0.ɵɵNgOnChangesFeature], decls: 6, vars: 3, consts: [[1, "component-wrapper"], ["class", "toolbar-wrapper", 4, "ngIf"], [1, "canvas-wrapper"], ["id", "neurasilChartCanvas", 3, "ngClass"], ["neurasilChartCanvas", ""], ["class", "overlay", 4, "ngIf"], [1, "toolbar-wrapper"], [3, "toolbarProps", "toolbarPropsChange"], [1, "overlay"], [1, "overlay-contents"]], template: function NeurasilChartsComponent_Template(rf, ctx) { if (rf & 1) {
         i0.ɵɵelementStart(0, "div", 0);
         i0.ɵɵtemplate(1, NeurasilChartsComponent_div_1_Template, 2, 1, "div", 1);
         i0.ɵɵelementStart(2, "div", 2);
@@ -961,6 +1004,8 @@ class NeurasilChartsComponent {
         }], showDataLabels: [{
             type: Input
         }], noDataMessage: [{
+            type: Input
+        }], additionalPluginOpts: [{
             type: Input
         }], chartTypeChange: [{
             type: Output
