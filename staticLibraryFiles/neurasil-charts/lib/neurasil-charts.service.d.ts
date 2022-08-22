@@ -10,7 +10,7 @@ export declare class NeurasilChartsService {
         };
         data: Array<any>;
     };
-    chartObjectBuilder(chartType: any, chartData: any, useAltAxis: any, title: any, yAxisLabelText: any, yAxisLabelText_Alt: any, xAxisLabelText: any, cornerstone: any, swapLabelsAndDatasets: any, formatObject: any): {
+    chartObjectBuilder(chartType: any, chartData: any, useAltAxis: any, title: any, yAxisLabelText: any, yAxisLabelText_Alt: any, xAxisLabelText: any, cornerstone: any, swapLabelsAndDatasets: any, formatObject: any, useLogScale: any, colorPalette: any, hoverOpacity: any, defaultOpacity: any, hoverOpacity_border: any, defaultOpacity_border: any): {
         plugins: any[];
         type: any;
         data: {
@@ -19,7 +19,7 @@ export declare class NeurasilChartsService {
         };
         options: any;
     };
-    dataParser(chartData: any, useAltAxis: any, chartType: any, cornerstone: any, swapLabelsAndDatasets: any): {
+    dataParser(chartData: any, useAltAxis: any, chartType: any, cornerstone: any, swapLabelsAndDatasets: any, colorPaletteToUse: Array<string>, hoverOpacity: any, defaultOpacity: any, hoverOpacity_border: any, defaultOpacity_border: any): {
         labels: any;
         datasets: any[];
     };

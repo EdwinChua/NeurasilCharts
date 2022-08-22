@@ -20,6 +20,24 @@ var NEURASIL_CHART_TYPE;
     NEURASIL_CHART_TYPE[NEURASIL_CHART_TYPE["STACKED_PARETO"] = 9] = "STACKED_PARETO";
 })(NEURASIL_CHART_TYPE || (NEURASIL_CHART_TYPE = {}));
 
+class Utils {
+    static hexToRgba(hex, alpha = 1) {
+        const [r, g, b] = hex.match(hex.length <= 4 ? /\w/g : /\w\w/g)
+            .map(x => parseInt(x.length < 2 ? `${x}${x}` : x, 16));
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+    ;
+    //takes opacity param, convert rgb to rgba OR set opacity for rgba
+    static rgbToRgba(rgb, opacity = 1) {
+        const [r, g, b] = rgb.match(/\d+/g);
+        return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+    }
+    //checks string to determine if is hex
+    static colorIsHex(str) {
+        return str.match(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/);
+    }
+}
+
 class NeurasilChartsService {
     constructor() { }
     parseDataFromDatasource(chartType, incomingData, swapLabelsAndDatasets) {
@@ -128,7 +146,7 @@ class NeurasilChartsService {
         // console.log(returnData);
         return returnData;
     }
-    chartObjectBuilder(chartType, chartData, useAltAxis, title, yAxisLabelText, yAxisLabelText_Alt, xAxisLabelText, cornerstone, swapLabelsAndDatasets, formatObject) {
+    chartObjectBuilder(chartType, chartData, useAltAxis, title, yAxisLabelText, yAxisLabelText_Alt, xAxisLabelText, cornerstone, swapLabelsAndDatasets, formatObject, useLogScale, colorPalette, hoverOpacity, defaultOpacity, hoverOpacity_border, defaultOpacity_border) {
         if ((chartType == NEURASIL_CHART_TYPE.BAR || chartType == NEURASIL_CHART_TYPE.HORIZONTAL_BAR || chartType == NEURASIL_CHART_TYPE.LINE || chartType == NEURASIL_CHART_TYPE.STACKED || chartType == NEURASIL_CHART_TYPE.PIE || chartType == NEURASIL_CHART_TYPE.DONUT) && useAltAxis == true) {
             console.warn("You have enabled alternate axis on a (unsupported) chart type. It has been set to false");
             useAltAxis = false;
@@ -172,10 +190,33 @@ class NeurasilChartsService {
                 options.scales = {
                     x: {
                         stacked: true,
-                        title: xAxisLabel
+                        title: xAxisLabel,
+                        ticks: {
+                            callback: function (value, index, ticks) {
+                                let label = this.getLabelForValue(value);
+                                if (!Array.isArray(label)) {
+                                    if (label.length <= 10) {
+                                        return label;
+                                    }
+                                    return label.substr(0, 8) + "..."; //truncate
+                                }
+                                else {
+                                    let res = [];
+                                    for (var i in label) {
+                                        if (label[i][0].length <= 10) {
+                                            res.push(label[i][0]);
+                                        }
+                                        else {
+                                            res.push([label[i][0].substr(0, 8) + "..."]);
+                                        }
+                                    }
+                                    return res;
+                                }
+                            }
+                        }
                     },
                     yAxis: {
-                        type: 'linear',
+                        type: useLogScale ? 'logarithmic' : 'linear',
                         position: 'left',
                         stacked: true,
                         title: yAxisLabel
@@ -200,11 +241,45 @@ class NeurasilChartsService {
                 }
             }
             else {
+                // if (options.scales == null) options.scales = {};
+                // if (options.scales.x == null) options.scales.x = {};
+                // options.scales.x.ticks = {
+                //   callback: function (value, index, ticks) {
+                //     console.log(value, index)
+                //     console.log(ticks)
+                //     console.log(this.getLabelForValue(value))
+                //     return this.getLabelForValue(value).substr(0, 10);//truncate
+                //   }
+                // }
                 options.scales = {
                     x: {
-                        title: xAxisLabel
+                        title: xAxisLabel,
+                        ticks: {
+                            callback: function (value, index, ticks) {
+                                let label = this.getLabelForValue(value);
+                                if (!Array.isArray(label)) {
+                                    if (label.length <= 10) {
+                                        return label;
+                                    }
+                                    return label.substr(0, 8) + "..."; //truncate
+                                }
+                                else {
+                                    let res = [];
+                                    for (var i in label) {
+                                        if (label[i][0].length <= 10) {
+                                            res.push(label[i][0]);
+                                        }
+                                        else {
+                                            res.push([label[i][0].substr(0, 8) + "..."]);
+                                        }
+                                    }
+                                    return res;
+                                }
+                            }
+                        }
                     },
                     yAxis: {
+                        type: useLogScale ? 'logarithmic' : 'linear',
                         beginAtZero: true,
                         title: yAxisLabel
                     },
@@ -319,12 +394,12 @@ class NeurasilChartsService {
         let returnOpts = {
             plugins: [],
             type: type,
-            data: this.dataParser(chartData, useAltAxis, chartType, cornerstone, swapLabelsAndDatasets),
+            data: this.dataParser(chartData, useAltAxis, chartType, cornerstone, swapLabelsAndDatasets, colorPalette, hoverOpacity, defaultOpacity, hoverOpacity_border, defaultOpacity_border),
             options: options
         };
         return returnOpts;
     }
-    dataParser(chartData, useAltAxis /*boolean*/, chartType /*chartType enum*/, cornerstone, swapLabelsAndDatasets) {
+    dataParser(chartData, useAltAxis /*boolean*/, chartType /*chartType enum*/, cornerstone, swapLabelsAndDatasets, colorPaletteToUse = null, hoverOpacity, defaultOpacity, hoverOpacity_border, defaultOpacity_border) {
         // helper function to get color array for chart. cycles through when 
         function getPalette(opacity, noOfColors) {
             let colors = [
@@ -342,6 +417,19 @@ class NeurasilChartsService {
                 `rgba(189,0,38,${opacity})`,
                 `rgba(128,0,38,${opacity})`
             ];
+            if (colorPaletteToUse) {
+                colors = [];
+                for (let i in colorPaletteToUse) {
+                    let color = colorPaletteToUse[i];
+                    if (Utils.colorIsHex(color)) {
+                        color = Utils.hexToRgba(color, opacity);
+                    }
+                    else {
+                        color = Utils.rgbToRgba(color, opacity);
+                    }
+                    colors.push(color);
+                }
+            }
             if (noOfColors > colors.length) { // if more colors are required than available, cycle through beginning again
                 let diff = noOfColors - colors.length;
                 let colorsLength = colors.length;
@@ -354,18 +442,21 @@ class NeurasilChartsService {
             }
             return colors;
         }
-        let colorPalatte;
-        let bgColorPalatte;
-        let bgColorPalatte_hover;
+        let colorPalette;
+        let colorPalette_hover;
+        let bgColorPalette;
+        let bgColorPalette_hover;
         if (!swapLabelsAndDatasets) {
-            colorPalatte = getPalette(1, chartData[cornerstone].length);
-            bgColorPalatte = getPalette(0.3, chartData[cornerstone].length);
-            bgColorPalatte_hover = getPalette(0.5, chartData[cornerstone].length);
+            bgColorPalette = getPalette(defaultOpacity, chartData[cornerstone].length);
+            bgColorPalette_hover = getPalette(hoverOpacity, chartData[cornerstone].length);
+            colorPalette = getPalette(defaultOpacity_border, chartData[cornerstone].length);
+            colorPalette_hover = getPalette(hoverOpacity_border, chartData[cornerstone].length);
         }
         else {
-            colorPalatte = getPalette(1, Object.keys(chartData).length);
-            bgColorPalatte = getPalette(0.3, Object.keys(chartData).length);
-            bgColorPalatte_hover = getPalette(0.5, Object.keys(chartData).length);
+            bgColorPalette = getPalette(defaultOpacity, Object.keys(chartData).length);
+            bgColorPalette_hover = getPalette(hoverOpacity, Object.keys(chartData).length);
+            colorPalette = getPalette(defaultOpacity_border, Object.keys(chartData).length);
+            colorPalette_hover = getPalette(hoverOpacity_border, Object.keys(chartData).length);
         }
         let dataSets = [];
         let objKeys = Object.keys(chartData);
@@ -384,10 +475,10 @@ class NeurasilChartsService {
             let dataSet = {
                 label: objKeys[i],
                 data: chartData[objKeys[i]],
-                backgroundColor: bgColorPalatte[i],
-                borderColor: colorPalatte[i],
-                hoverBackgroundColor: bgColorPalatte_hover[i],
-                hoverBorderColor: colorPalatte[i],
+                backgroundColor: bgColorPalette[i],
+                borderColor: colorPalette[i],
+                hoverBackgroundColor: bgColorPalette_hover[i],
+                hoverBorderColor: colorPalette_hover[i],
                 borderWidth: 2
             };
             // console.log(dataSet)
@@ -400,28 +491,28 @@ class NeurasilChartsService {
                 }
             }
             if (chartType == NEURASIL_CHART_TYPE.BAR || chartType == NEURASIL_CHART_TYPE.HORIZONTAL_BAR || chartType == NEURASIL_CHART_TYPE.STACKED || chartType == NEURASIL_CHART_TYPE.STACKED_PARETO) {
-                dataSet.backgroundColor = bgColorPalatte[i];
-                dataSet.borderColor = colorPalatte[i];
-                dataSet.hoverBackgroundColor = bgColorPalatte_hover[i];
-                dataSet.hoverBorderColor = colorPalatte[i];
+                dataSet.backgroundColor = bgColorPalette[i];
+                dataSet.borderColor = colorPalette[i];
+                dataSet.hoverBackgroundColor = bgColorPalette_hover[i];
+                dataSet.hoverBorderColor = colorPalette[i];
             }
             else if (chartType == NEURASIL_CHART_TYPE.BAR_LINE || chartType == NEURASIL_CHART_TYPE.LINE) {
                 if (dataSet.type == 'bar') {
-                    dataSet.backgroundColor = bgColorPalatte[i];
-                    dataSet.borderColor = colorPalatte[i];
-                    dataSet.hoverBackgroundColor = bgColorPalatte_hover[i];
-                    dataSet.hoverBorderColor = colorPalatte[i];
+                    dataSet.backgroundColor = bgColorPalette[i];
+                    dataSet.borderColor = colorPalette[i];
+                    dataSet.hoverBackgroundColor = bgColorPalette_hover[i];
+                    dataSet.hoverBorderColor = colorPalette[i];
                 }
                 else {
-                    dataSet.borderColor = colorPalatte[i];
+                    dataSet.borderColor = colorPalette[i];
                     dataSet.backgroundColor = 'rgba(0,0,0,0)';
                 }
             }
             else if (chartType == NEURASIL_CHART_TYPE.PIE || chartType == NEURASIL_CHART_TYPE.DONUT) { // overwrite single color assignment to array.
-                dataSet.backgroundColor = bgColorPalatte;
-                dataSet.borderColor = colorPalatte;
-                dataSet.hoverBackgroundColor = bgColorPalatte_hover;
-                dataSet.hoverBorderColor = colorPalatte;
+                dataSet.backgroundColor = bgColorPalette;
+                dataSet.borderColor = colorPalette;
+                dataSet.hoverBackgroundColor = bgColorPalette_hover;
+                dataSet.hoverBorderColor = colorPalette;
             }
             if (chartType != NEURASIL_CHART_TYPE.PIE && chartType != NEURASIL_CHART_TYPE.DONUT) {
                 if (chartType != NEURASIL_CHART_TYPE.STACKED && chartType != NEURASIL_CHART_TYPE.STACKED_PARETO) {
@@ -805,6 +896,10 @@ class NeurasilChartsComponent {
         this.yAxisLabelText = "";
         /** Alt-Y-Axis text   */
         this.yAxisLabelText_Alt = "";
+        this.hoverOpacity = 0.9;
+        this.defaultOpacity = 0.5;
+        this.hoverOpacity_border = 1;
+        this.defaultOpacity_border = 1;
         /** Filter data */
         this.globalFilter = "";
         /** Show data labels
@@ -812,7 +907,9 @@ class NeurasilChartsComponent {
         */
         this.showDataLabels = false;
         this.noDataMessage = "No data to display. Check your filters.";
-        this.additionalPluginOpts = {};
+        this.additionalOpts_Plugins = {};
+        this.additionalOpts_Elements = {};
+        this.useLogScale = false;
         /** Emits event from changing Chart type from toolbar (I think, forgot what else this does) */
         this.chartTypeChange = new EventEmitter();
         /** Forgot what this does */
@@ -874,12 +971,13 @@ class NeurasilChartsComponent {
             if (this.hasData) {
                 let o = this.neurasilChartsService.parseDataFromDatasource(this.toolbarProps.chartType, filteredData, this.toolbarProps.swapLabelsAndDatasets);
                 // console.log("o",o)
-                let props = this.neurasilChartsService.chartObjectBuilder(this.toolbarProps.chartType, o.data, this.useAltAxis, this.chartTitle, this.yAxisLabelText, this.yAxisLabelText_Alt, this.xAxisLabelText, o._cornerstone, this.toolbarProps.swapLabelsAndDatasets, o._formatObject);
+                let props = this.neurasilChartsService.chartObjectBuilder(this.toolbarProps.chartType, o.data, this.useAltAxis, this.chartTitle, this.yAxisLabelText, this.yAxisLabelText_Alt, this.xAxisLabelText, o._cornerstone, this.toolbarProps.swapLabelsAndDatasets, o._formatObject, this.useLogScale, this.colorPalette, this.hoverOpacity, this.defaultOpacity, this.hoverOpacity_border, this.defaultOpacity_border);
                 if (this.toolbarProps.chartType == NEURASIL_CHART_TYPE.STACKED_PARETO) {
                     this.neurasilChartsService.performParetoAnalysis(props); // modify chart props object
                 }
                 let THIS = this;
                 //Cant put this in service, idk why
+                //#region emit onclick event data
                 props.options.onClick = function (ev, element, chartObj) {
                     if (element[0]) {
                         let clickData = element[0];
@@ -901,15 +999,27 @@ class NeurasilChartsComponent {
                         THIS.dataOnClick.emit(data);
                     }
                 };
+                //#endregion
+                //#region show data labels
                 if (this.showDataLabels || isPrinting) {
                     props.plugins.push(ChartDataLabels);
                 }
+                //#endregion
+                //#region add additional options.plugins data
                 if (!props.options.plugins) {
                     props.options.plugins = {};
                 }
-                if (this.additionalPluginOpts) {
-                    props.options.plugins = this.additionalPluginOpts;
+                if (this.additionalOpts_Plugins) {
+                    props.options.plugins = this.additionalOpts_Plugins;
                 }
+                //#endregion
+                //#region add additional options.elements data
+                if (!props.options.elements) {
+                    props.options.elements = {};
+                }
+                props.options.elements = Object.assign(Object.assign({}, props.options.elements), this.additionalOpts_Elements);
+                //#endregion
+                //#region format datalabels to 3 decimal places
                 props.options.plugins.datalabels = {
                     formatter: function (value, context) {
                         //return Math.round(value*100) + '%';
@@ -924,6 +1034,8 @@ class NeurasilChartsComponent {
                         }
                     }
                 };
+                //#endregion
+                //#region customize tooltip
                 if (this.chartType == NEURASIL_CHART_TYPE.DONUT || this.chartType == NEURASIL_CHART_TYPE.PIE) {
                     props.options.plugins.tooltip = {
                         callbacks: {
@@ -960,8 +1072,7 @@ class NeurasilChartsComponent {
                         }
                     };
                 }
-                // console.log("ctx",ctx)
-                // console.log("props",props)
+                //#endregion
                 this._canvas = new Chart(ctx, props);
             }
         }
@@ -980,7 +1091,7 @@ class NeurasilChartsComponent {
         if (rf & 1) {
             i0.ɵɵlistener("beforeprint", function NeurasilChartsComponent_beforeprint_HostBindingHandler($event) { return ctx.onBeforePrint($event); }, false, i0.ɵɵresolveWindow)("afterprint", function NeurasilChartsComponent_afterprint_HostBindingHandler($event) { return ctx.onAfterPrint($event); }, false, i0.ɵɵresolveWindow);
         }
-    }, inputs: { data: "data", showToolbar: "showToolbar", chartType: "chartType", useAltAxis: "useAltAxis", chartTitle: "chartTitle", xAxisLabelText: "xAxisLabelText", yAxisLabelText: "yAxisLabelText", yAxisLabelText_Alt: "yAxisLabelText_Alt", swapLabelsAndDatasets: "swapLabelsAndDatasets", globalFilter: "globalFilter", showDataLabels: "showDataLabels", noDataMessage: "noDataMessage", additionalPluginOpts: "additionalPluginOpts" }, outputs: { chartTypeChange: "chartTypeChange", showToolbarChange: "showToolbarChange", swapLabelsAndDatasetsChange: "swapLabelsAndDatasetsChange", dataOnClick: "dataOnClick" }, features: [i0.ɵɵProvidersFeature([NeurasilDataFilter]), i0.ɵɵNgOnChangesFeature], decls: 6, vars: 3, consts: [[1, "component-wrapper"], ["class", "toolbar-wrapper", 4, "ngIf"], [1, "canvas-wrapper"], ["id", "neurasilChartCanvas", 3, "ngClass"], ["neurasilChartCanvas", ""], ["class", "overlay", 4, "ngIf"], [1, "toolbar-wrapper"], [3, "toolbarProps", "toolbarPropsChange"], [1, "overlay"], [1, "overlay-contents"]], template: function NeurasilChartsComponent_Template(rf, ctx) {
+    }, inputs: { data: "data", showToolbar: "showToolbar", chartType: "chartType", useAltAxis: "useAltAxis", chartTitle: "chartTitle", xAxisLabelText: "xAxisLabelText", yAxisLabelText: "yAxisLabelText", yAxisLabelText_Alt: "yAxisLabelText_Alt", colorPalette: "colorPalette", hoverOpacity: "hoverOpacity", defaultOpacity: "defaultOpacity", hoverOpacity_border: "hoverOpacity_border", defaultOpacity_border: "defaultOpacity_border", swapLabelsAndDatasets: "swapLabelsAndDatasets", globalFilter: "globalFilter", showDataLabels: "showDataLabels", noDataMessage: "noDataMessage", additionalOpts_Plugins: "additionalOpts_Plugins", additionalOpts_Elements: "additionalOpts_Elements", useLogScale: "useLogScale" }, outputs: { chartTypeChange: "chartTypeChange", showToolbarChange: "showToolbarChange", swapLabelsAndDatasetsChange: "swapLabelsAndDatasetsChange", dataOnClick: "dataOnClick" }, features: [i0.ɵɵProvidersFeature([NeurasilDataFilter]), i0.ɵɵNgOnChangesFeature], decls: 6, vars: 3, consts: [[1, "component-wrapper"], ["class", "toolbar-wrapper", 4, "ngIf"], [1, "canvas-wrapper"], ["id", "neurasilChartCanvas", 3, "ngClass"], ["neurasilChartCanvas", ""], ["class", "overlay", 4, "ngIf"], [1, "toolbar-wrapper"], [3, "toolbarProps", "toolbarPropsChange"], [1, "overlay"], [1, "overlay-contents"]], template: function NeurasilChartsComponent_Template(rf, ctx) {
         if (rf & 1) {
             i0.ɵɵelementStart(0, "div", 0);
             i0.ɵɵtemplate(1, NeurasilChartsComponent_div_1_Template, 2, 1, "div", 1);
@@ -1021,6 +1132,16 @@ class NeurasilChartsComponent {
                 type: Input
             }], yAxisLabelText_Alt: [{
                 type: Input
+            }], colorPalette: [{
+                type: Input
+            }], hoverOpacity: [{
+                type: Input
+            }], defaultOpacity: [{
+                type: Input
+            }], hoverOpacity_border: [{
+                type: Input
+            }], defaultOpacity_border: [{
+                type: Input
             }], swapLabelsAndDatasets: [{
                 type: Input
             }], globalFilter: [{
@@ -1029,7 +1150,11 @@ class NeurasilChartsComponent {
                 type: Input
             }], noDataMessage: [{
                 type: Input
-            }], additionalPluginOpts: [{
+            }], additionalOpts_Plugins: [{
+                type: Input
+            }], additionalOpts_Elements: [{
+                type: Input
+            }], useLogScale: [{
                 type: Input
             }], chartTypeChange: [{
                 type: Output

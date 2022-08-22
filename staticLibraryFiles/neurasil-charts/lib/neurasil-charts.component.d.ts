@@ -23,6 +23,11 @@ export declare class NeurasilChartsComponent implements OnInit, AfterViewInit, O
     yAxisLabelText: string;
     /** Alt-Y-Axis text   */
     yAxisLabelText_Alt: string;
+    colorPalette: Array<string>;
+    hoverOpacity: number;
+    defaultOpacity: number;
+    hoverOpacity_border: number;
+    defaultOpacity_border: number;
     /** Swap Dataset and Labels
      * @
      */
@@ -34,7 +39,9 @@ export declare class NeurasilChartsComponent implements OnInit, AfterViewInit, O
     */
     showDataLabels: boolean;
     noDataMessage: string;
-    additionalPluginOpts: {};
+    additionalOpts_Plugins: {};
+    additionalOpts_Elements: {};
+    useLogScale: boolean;
     /** Emits event from changing Chart type from toolbar (I think, forgot what else this does) */
     chartTypeChange: EventEmitter<any>;
     /** Forgot what this does */
@@ -60,5 +67,5 @@ export declare class NeurasilChartsComponent implements OnInit, AfterViewInit, O
     updateToolbarProps(ev: any): void;
     drawChart(isPrinting?: boolean): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<NeurasilChartsComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<NeurasilChartsComponent, "neurasil-charts", never, { "data": "data"; "showToolbar": "showToolbar"; "chartType": "chartType"; "useAltAxis": "useAltAxis"; "chartTitle": "chartTitle"; "xAxisLabelText": "xAxisLabelText"; "yAxisLabelText": "yAxisLabelText"; "yAxisLabelText_Alt": "yAxisLabelText_Alt"; "swapLabelsAndDatasets": "swapLabelsAndDatasets"; "globalFilter": "globalFilter"; "showDataLabels": "showDataLabels"; "noDataMessage": "noDataMessage"; "additionalPluginOpts": "additionalPluginOpts"; }, { "chartTypeChange": "chartTypeChange"; "showToolbarChange": "showToolbarChange"; "swapLabelsAndDatasetsChange": "swapLabelsAndDatasetsChange"; "dataOnClick": "dataOnClick"; }, never, never, false>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<NeurasilChartsComponent, "neurasil-charts", never, { "data": "data"; "showToolbar": "showToolbar"; "chartType": "chartType"; "useAltAxis": "useAltAxis"; "chartTitle": "chartTitle"; "xAxisLabelText": "xAxisLabelText"; "yAxisLabelText": "yAxisLabelText"; "yAxisLabelText_Alt": "yAxisLabelText_Alt"; "colorPalette": "colorPalette"; "hoverOpacity": "hoverOpacity"; "defaultOpacity": "defaultOpacity"; "hoverOpacity_border": "hoverOpacity_border"; "defaultOpacity_border": "defaultOpacity_border"; "swapLabelsAndDatasets": "swapLabelsAndDatasets"; "globalFilter": "globalFilter"; "showDataLabels": "showDataLabels"; "noDataMessage": "noDataMessage"; "additionalOpts_Plugins": "additionalOpts_Plugins"; "additionalOpts_Elements": "additionalOpts_Elements"; "useLogScale": "useLogScale"; }, { "chartTypeChange": "chartTypeChange"; "showToolbarChange": "showToolbarChange"; "swapLabelsAndDatasetsChange": "swapLabelsAndDatasetsChange"; "dataOnClick": "dataOnClick"; }, never, never, false>;
 }
