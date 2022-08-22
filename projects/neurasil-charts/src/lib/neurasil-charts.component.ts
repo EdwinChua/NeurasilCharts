@@ -37,6 +37,12 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
   @Input() yAxisLabelText: string = "";
   /** Alt-Y-Axis text   */
   @Input() yAxisLabelText_Alt: string = "";
+
+  @Input() colorPalette:Array<string>;
+  @Input() hoverOpacity: number = 0.9;
+  @Input() defaultOpacity: number = 0.5;
+  @Input() hoverOpacity_border: number = 1;
+  @Input() defaultOpacity_border: number = 1;
   /** Swap Dataset and Labels 
    * @
    */
@@ -50,7 +56,11 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
 
   @Input() noDataMessage: string = "No data to display. Check your filters.";
 
-  @Input() additionalPluginOpts = {};
+  @Input() additionalOpts_Plugins = {};
+
+  @Input() additionalOpts_Elements = {};
+
+  @Input() useLogScale:boolean = false;
 
   /** Emits event from changing Chart type from toolbar (I think, forgot what else this does) */
   @Output() chartTypeChange = new EventEmitter();
@@ -128,7 +138,23 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
       if (this.hasData) {
         let o = this.neurasilChartsService.parseDataFromDatasource(this.toolbarProps.chartType, filteredData, this.toolbarProps.swapLabelsAndDatasets);
         // console.log("o",o)
-        let props = this.neurasilChartsService.chartObjectBuilder(this.toolbarProps.chartType, o.data, this.useAltAxis, this.chartTitle, this.yAxisLabelText, this.yAxisLabelText_Alt, this.xAxisLabelText, o._cornerstone, this.toolbarProps.swapLabelsAndDatasets, o._formatObject);
+        let props = this.neurasilChartsService.chartObjectBuilder(
+          this.toolbarProps.chartType, 
+          o.data, this.useAltAxis, 
+          this.chartTitle, 
+          this.yAxisLabelText, 
+          this.yAxisLabelText_Alt, 
+          this.xAxisLabelText, 
+          o._cornerstone,
+          this.toolbarProps.swapLabelsAndDatasets, 
+          o._formatObject,
+          this.useLogScale,
+          this.colorPalette,
+          this.hoverOpacity,
+          this.defaultOpacity,
+          this.hoverOpacity_border,
+          this.defaultOpacity_border,
+          );
 
         if (this.toolbarProps.chartType == NEURASIL_CHART_TYPE.STACKED_PARETO) {
           this.neurasilChartsService.performParetoAnalysis(props); // modify chart props object
@@ -136,6 +162,7 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
 
         let THIS = this;
         //Cant put this in service, idk why
+        //#region emit onclick event data
         props.options.onClick = function (ev, element, chartObj) {
           if (element[0]) {
             let clickData = element[0];
@@ -157,15 +184,28 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
             THIS.dataOnClick.emit(data)
           }
         }
+        //#endregion
+
+        //#region show data labels
         if (this.showDataLabels || isPrinting) {
           props.plugins.push(ChartDataLabels);
         }
+        //#endregion
+        //#region add additional options.plugins data
         if (!props.options.plugins) {
           props.options.plugins = {}
         }
-        if (this.additionalPluginOpts){
-          props.options.plugins = this.additionalPluginOpts;
+        if (this.additionalOpts_Plugins){
+          props.options.plugins = this.additionalOpts_Plugins;
         }
+        //#endregion
+        //#region add additional options.elements data
+        if (!props.options.elements) {
+          props.options.elements = {}
+        }
+        props.options.elements = { ...props.options.elements, ...this.additionalOpts_Elements };
+        //#endregion
+        //#region format datalabels to 3 decimal places
         props.options.plugins.datalabels = {
           formatter: function (value, context) {
             //return Math.round(value*100) + '%';
@@ -178,6 +218,8 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
             }
           }
         }
+        //#endregion
+        //#region customize tooltip
         if (this.chartType == NEURASIL_CHART_TYPE.DONUT || this.chartType == NEURASIL_CHART_TYPE.PIE) {
           props.options.plugins.tooltip = {
             callbacks: {
@@ -215,10 +257,9 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
             }
           }
         }
+        //#endregion
 
 
-        // console.log("ctx",ctx)
-        // console.log("props",props)
         this._canvas = new Chart(ctx, props);
       }
     }

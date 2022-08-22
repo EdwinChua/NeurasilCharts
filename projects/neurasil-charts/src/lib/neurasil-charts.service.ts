@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NEURASIL_CHART_TYPE } from './models';
+import { Utils } from './utils';
 
 @Injectable({
   providedIn: 'root'
@@ -135,7 +136,24 @@ export class NeurasilChartsService {
   }
 
 
-  chartObjectBuilder(chartType, chartData, useAltAxis, title, yAxisLabelText, yAxisLabelText_Alt, xAxisLabelText, cornerstone, swapLabelsAndDatasets, formatObject) {
+  chartObjectBuilder(
+    chartType,
+    chartData,
+    useAltAxis,
+    title,
+    yAxisLabelText,
+    yAxisLabelText_Alt,
+    xAxisLabelText,
+    cornerstone,
+    swapLabelsAndDatasets,
+    formatObject,
+    useLogScale,
+    colorPalette,
+    hoverOpacity,
+    defaultOpacity,
+    hoverOpacity_border,
+    defaultOpacity_border
+  ) {
     if ((chartType == NEURASIL_CHART_TYPE.BAR || chartType == NEURASIL_CHART_TYPE.HORIZONTAL_BAR || chartType == NEURASIL_CHART_TYPE.LINE || chartType == NEURASIL_CHART_TYPE.STACKED || chartType == NEURASIL_CHART_TYPE.PIE || chartType == NEURASIL_CHART_TYPE.DONUT) && useAltAxis == true) {
       console.warn("You have enabled alternate axis on a (unsupported) chart type. It has been set to false");
       useAltAxis = false;
@@ -178,6 +196,8 @@ export class NeurasilChartsService {
       xAxisLabel.display = true;
       xAxisLabel.text = [" ", " "];
     }
+
+
     // console.log(xAxisLabelText)
     if (chartType != NEURASIL_CHART_TYPE.PIE && chartType != NEURASIL_CHART_TYPE.DONUT) {
       if (chartType == NEURASIL_CHART_TYPE.STACKED || chartType == NEURASIL_CHART_TYPE.STACKED_PARETO) {
@@ -185,10 +205,32 @@ export class NeurasilChartsService {
         options.scales = {
           x: {
             stacked: true,
-            title: xAxisLabel
+            title: xAxisLabel,
+            ticks: {
+              callback: function (value, index, ticks) {
+                let label = this.getLabelForValue(value);
+                if (!Array.isArray(label)) {
+                  if (label.length <= 10) {
+                    return label;
+                  }
+                  return label.substr(0, 8) + "...";//truncate
+                }
+                else {
+                  let res = [];
+                  for (var i in label) {
+                    if (label[i][0].length <= 10) {
+                      res.push(label[i][0])
+                    } else {
+                      res.push([label[i][0].substr(0, 8) + "..."]);
+                    }
+                  }
+                  return res;
+                }
+              }
+            }
           },
           yAxis: {
-            type:'linear',
+            type: useLogScale ? 'logarithmic':'linear',
             position: 'left',
             stacked: true,
             title: yAxisLabel
@@ -196,14 +238,14 @@ export class NeurasilChartsService {
         }
 
         if (chartType == NEURASIL_CHART_TYPE.STACKED_PARETO) {
-          
+
           let altAxisObj: any = {
             //id: 'yAxis_pareto',
-            type:'linear',
+            type: 'linear',
             position: 'right',
             display: true,
             beginAtZero: true,
-            ticks:{},
+            ticks: {},
             title: yAxisLabel_Alt
           }
           altAxisObj.min = 0;
@@ -212,16 +254,49 @@ export class NeurasilChartsService {
             stepSize: 80
           }
 
-          options.scales.yAxis_pareto= altAxisObj;
-          
+          options.scales.yAxis_pareto = altAxisObj;
+
         }
 
       } else {
+        // if (options.scales == null) options.scales = {};
+        // if (options.scales.x == null) options.scales.x = {};
+        // options.scales.x.ticks = {
+        //   callback: function (value, index, ticks) {
+        //     console.log(value, index)
+        //     console.log(ticks)
+        //     console.log(this.getLabelForValue(value))
+        //     return this.getLabelForValue(value).substr(0, 10);//truncate
+        //   }
+        // }
         options.scales = {
           x: {
-            title: xAxisLabel
+            title: xAxisLabel,
+            ticks: {
+              callback: function (value, index, ticks) {
+                let label = this.getLabelForValue(value);
+                if (!Array.isArray(label)) {
+                  if (label.length <= 10) {
+                    return label;
+                  }
+                  return label.substr(0, 8) + "...";//truncate
+                }
+                else {
+                  let res = [];
+                  for (var i in label) {
+                    if (label[i][0].length <= 10) {
+                      res.push(label[i][0])
+                    } else {
+                      res.push([label[i][0].substr(0, 8) + "..."]);
+                    }
+                  }
+                  return res;
+                }
+              }
+            }
           },
           yAxis: {
+            type: useLogScale ? 'logarithmic':'linear',
             beginAtZero: true,
             title: yAxisLabel
           },
@@ -235,7 +310,7 @@ export class NeurasilChartsService {
               beginAtZero: true,
             },
             position: 'right',
-            type:'linear',
+            type: 'linear',
             title: yAxisLabel_Alt
           }
           // if (chartType == NEURASIL_CHART_TYPE.STACKED_PARETO) {
@@ -341,15 +416,36 @@ export class NeurasilChartsService {
 
 
     let returnOpts = {
-      plugins:[],
+      plugins: [],
       type: type,
-      data: this.dataParser(chartData, useAltAxis, chartType, cornerstone, swapLabelsAndDatasets),
+      data: this.dataParser(
+        chartData,
+        useAltAxis,
+        chartType,
+        cornerstone,
+        swapLabelsAndDatasets,
+        colorPalette,
+        hoverOpacity,
+        defaultOpacity,
+        hoverOpacity_border,
+        defaultOpacity_border),
       options: options
     }
     return returnOpts;
   }
 
-  dataParser(chartData, useAltAxis /*boolean*/, chartType /*chartType enum*/, cornerstone, swapLabelsAndDatasets) {
+  dataParser(
+    chartData,
+    useAltAxis /*boolean*/,
+    chartType /*chartType enum*/,
+    cornerstone,
+    swapLabelsAndDatasets,
+    colorPaletteToUse: Array<string> = null,
+    hoverOpacity,
+    defaultOpacity,
+    hoverOpacity_border,
+    defaultOpacity_border) 
+  {
 
     // helper function to get color array for chart. cycles through when 
     function getPalette(opacity, noOfColors) {
@@ -368,6 +464,19 @@ export class NeurasilChartsService {
         `rgba(189,0,38,${opacity})`,
         `rgba(128,0,38,${opacity})`
       ];
+      if (colorPaletteToUse) {
+        colors = [];
+        for (let i in colorPaletteToUse) {
+          let color = colorPaletteToUse[i];
+          if (Utils.colorIsHex(color)) {
+            color = Utils.hexToRgba(color, opacity);
+          } else {
+            color = Utils.rgbToRgba(color, opacity);
+          }
+          colors.push(color);
+        }
+      }
+
 
       if (noOfColors > colors.length) { // if more colors are required than available, cycle through beginning again
         let diff = noOfColors - colors.length;
@@ -383,17 +492,20 @@ export class NeurasilChartsService {
       return colors;
     }
 
-    let colorPalatte;
-    let bgColorPalatte;
-    let bgColorPalatte_hover;
+    let colorPalette;
+    let colorPalette_hover;
+    let bgColorPalette;
+    let bgColorPalette_hover;
     if (!swapLabelsAndDatasets) {
-      colorPalatte = getPalette(1, chartData[cornerstone].length)
-      bgColorPalatte = getPalette(0.3, chartData[cornerstone].length)
-      bgColorPalatte_hover = getPalette(0.5, chartData[cornerstone].length)
+      bgColorPalette = getPalette(defaultOpacity, chartData[cornerstone].length)
+      bgColorPalette_hover = getPalette(hoverOpacity, chartData[cornerstone].length)
+      colorPalette = getPalette(defaultOpacity_border, chartData[cornerstone].length)
+      colorPalette_hover = getPalette(hoverOpacity_border, chartData[cornerstone].length)
     } else {
-      colorPalatte = getPalette(1, Object.keys(chartData).length)
-      bgColorPalatte = getPalette(0.3, Object.keys(chartData).length)
-      bgColorPalatte_hover = getPalette(0.5,  Object.keys(chartData).length)
+      bgColorPalette = getPalette(defaultOpacity, Object.keys(chartData).length)
+      bgColorPalette_hover = getPalette(hoverOpacity, Object.keys(chartData).length)
+      colorPalette = getPalette(defaultOpacity_border, Object.keys(chartData).length)
+      colorPalette_hover = getPalette(hoverOpacity_border, Object.keys(chartData).length)
     }
 
 
@@ -418,10 +530,10 @@ export class NeurasilChartsService {
       let dataSet: any = {
         label: objKeys[i],
         data: chartData[objKeys[i]],
-        backgroundColor: bgColorPalatte[i],
-        borderColor: colorPalatte[i],
-        hoverBackgroundColor: bgColorPalatte_hover[i],
-        hoverBorderColor: colorPalatte[i],
+        backgroundColor: bgColorPalette[i],
+        borderColor: colorPalette[i],
+        hoverBackgroundColor: bgColorPalette_hover[i],
+        hoverBorderColor: colorPalette_hover[i],
         borderWidth: 2
       };
 
@@ -438,25 +550,25 @@ export class NeurasilChartsService {
 
 
       if (chartType == NEURASIL_CHART_TYPE.BAR || chartType == NEURASIL_CHART_TYPE.HORIZONTAL_BAR || chartType == NEURASIL_CHART_TYPE.STACKED || chartType == NEURASIL_CHART_TYPE.STACKED_PARETO) {
-        dataSet.backgroundColor = bgColorPalatte[i];
-        dataSet.borderColor = colorPalatte[i];
-        dataSet.hoverBackgroundColor = bgColorPalatte_hover[i];
-        dataSet.hoverBorderColor = colorPalatte[i];
+        dataSet.backgroundColor = bgColorPalette[i];
+        dataSet.borderColor = colorPalette[i];
+        dataSet.hoverBackgroundColor = bgColorPalette_hover[i];
+        dataSet.hoverBorderColor = colorPalette[i];
       } else if (chartType == NEURASIL_CHART_TYPE.BAR_LINE || chartType == NEURASIL_CHART_TYPE.LINE) {
         if (dataSet.type == 'bar') {
-          dataSet.backgroundColor = bgColorPalatte[i];
-          dataSet.borderColor = colorPalatte[i];
-          dataSet.hoverBackgroundColor = bgColorPalatte_hover[i];
-          dataSet.hoverBorderColor = colorPalatte[i];
+          dataSet.backgroundColor = bgColorPalette[i];
+          dataSet.borderColor = colorPalette[i];
+          dataSet.hoverBackgroundColor = bgColorPalette_hover[i];
+          dataSet.hoverBorderColor = colorPalette[i];
         } else {
-          dataSet.borderColor = colorPalatte[i];
+          dataSet.borderColor = colorPalette[i];
           dataSet.backgroundColor = 'rgba(0,0,0,0)';
         }
       } else if (chartType == NEURASIL_CHART_TYPE.PIE || chartType == NEURASIL_CHART_TYPE.DONUT) {// overwrite single color assignment to array.
-        dataSet.backgroundColor = bgColorPalatte;
-        dataSet.borderColor = colorPalatte;
-        dataSet.hoverBackgroundColor = bgColorPalatte_hover;
-        dataSet.hoverBorderColor = colorPalatte;
+        dataSet.backgroundColor = bgColorPalette;
+        dataSet.borderColor = colorPalette;
+        dataSet.hoverBackgroundColor = bgColorPalette_hover;
+        dataSet.hoverBorderColor = colorPalette;
       }
 
 
@@ -475,7 +587,7 @@ export class NeurasilChartsService {
     return returnData;
   }
 
-  performParetoAnalysis(props){
+  performParetoAnalysis(props) {
     //modify chart object
     let localSumArr = [];
     let totalSum = 0;
@@ -526,7 +638,7 @@ export class NeurasilChartsService {
 
     //rebuild and reassign labels array - directly modifies chart object passed in
     let newLabelsArray = []
-    for (let i =0; i < newArr.length; i++){
+    for (let i = 0; i < newArr.length; i++) {
       newLabelsArray.push(newArr[i]["labels"]);
     }
     props.data.labels = newLabelsArray;
@@ -534,7 +646,7 @@ export class NeurasilChartsService {
     //rebuild and reassign data array for each dataset - directly modifies chart object passed in
     for (let j = 0; j < props.data.datasets.length; j++) {
       let data = [];
-      for (let i = 0; i < newArr.length; i++){
+      for (let i = 0; i < newArr.length; i++) {
         data.push(newArr[i][j])
       }
       props.data.datasets[j].data = data;
@@ -542,7 +654,7 @@ export class NeurasilChartsService {
 
     //create a sorted local sum array for pareto curve calculations
     let sortedlocalSumArr = [];
-    for (let i = 0 ; i < newArr.length; i++){
+    for (let i = 0; i < newArr.length; i++) {
       sortedlocalSumArr.push(newArr[i].sum)
     }
 
@@ -551,45 +663,45 @@ export class NeurasilChartsService {
     let eightyPercentLine = []; // hard coded to 80%
 
     // calculate and push pareto line, also populate 80% line array
-    for (let i = 0 ; i < sortedlocalSumArr.length; i++){
+    for (let i = 0; i < sortedlocalSumArr.length; i++) {
       rollingSum += sortedlocalSumArr[i];
-      let paretoVal = rollingSum/totalSum * 100;
-      paretoLineValues.push( Math.floor(paretoVal * 100) / 100 );
+      let paretoVal = rollingSum / totalSum * 100;
+      paretoLineValues.push(Math.floor(paretoVal * 100) / 100);
       eightyPercentLine.push(80)
     }
-    
+
     // add pareto curve as a new dataset - directly modifies chart object passed in 
     props.data.datasets.push({
-      "label":"Pareto",
-      "data":paretoLineValues,
-      "backgroundColor":"rgba(0,0,0,0)",
-      "borderColor":"rgba(0,0,0,0.8)",
-      "borderWidth":2,
-      "type":"line",
-      "yAxisID":"yAxis_pareto",
+      "label": "Pareto",
+      "data": paretoLineValues,
+      "backgroundColor": "rgba(0,0,0,0)",
+      "borderColor": "rgba(0,0,0,0.8)",
+      "borderWidth": 2,
+      "type": "line",
+      "yAxisID": "yAxis_pareto",
       "datalabels": {
-        "display":false
+        "display": false
       },
       "pointRadius": 0
     })
 
     // push 80% line as a new dataset - directly modifies chart object passed in
     props.data.datasets.push({
-      "label":"80% line",
-      "data":eightyPercentLine,
-      "backgroundColor":"rgba(0,0,0,0)",
-      "borderColor":"rgba(0,0,0,0.8)",
-      "borderWidth":2,
-      "type":"line",
-      "yAxisID":"yAxis_pareto",
+      "label": "80% line",
+      "data": eightyPercentLine,
+      "backgroundColor": "rgba(0,0,0,0)",
+      "borderColor": "rgba(0,0,0,0.8)",
+      "borderWidth": 2,
+      "type": "line",
+      "yAxisID": "yAxis_pareto",
       "datalabels": {
-        "display":false
+        "display": false
       },
       "pointRadius": 0
     })
   }
 
-    // unused. Migrated code to NeurasilDataFilterPipe
+  // unused. Migrated code to NeurasilDataFilterPipe
   // filterData(data: Array<any>, datasetFilter: string) {
 
   //   if (datasetFilter) {
