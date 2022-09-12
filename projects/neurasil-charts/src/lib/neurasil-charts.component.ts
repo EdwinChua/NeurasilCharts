@@ -208,8 +208,9 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
         //#region format datalabels to 3 decimal places
         props.options.plugins.datalabels = {
           formatter: function (value, context) {
-            //return Math.round(value*100) + '%';
-            if ((value > 0 && value >= 0.001) || (value < 0 && value < -0.001)) {
+            if (value == null || value == undefined){
+              return "";
+            } else if ((value > 0 && value >= 0.001) || (value < 0 && value < -0.001)) {
               return Math.round(value * 1000) / 1000;
             } else if (value > 0 && value < 0.001) {
               return "< 0.001";
