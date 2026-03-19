@@ -2,7 +2,7 @@
 
 ## Description
 
-An Angular wrapper for ChartJS. Provides a few functionalities to flip rows/columns of data sets, perform pareto analysis etc.
+An Angular 19 wrapper for Chart.js 4. Provides a few functionalities to flip rows/columns of data sets, perform pareto analysis etc.
 
 This documentation assumes the user has some familarity with ChartJS terminology. eg. Dataset, label, etc... because I'm lazy.
 
