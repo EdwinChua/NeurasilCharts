@@ -25,7 +25,7 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
   @Input() showToolbar: boolean = true;
   /** User-defined default chart type */
   @Input() chartType: NEURASIL_CHART_TYPE = null;
-  /** Show right axis for shits and giggles */
+  /** Show data on a secondary Y-axis */
   @Input() useAltAxis: boolean = true;
   /** Set a chart title */
   @Input() chartTitle: string = "";
@@ -95,10 +95,8 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
     this.drawChart();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes) {
-      this.drawChart();
-    }
+  ngOnChanges(_changes: SimpleChanges) {
+    this.drawChart();
   }
 
   updateToolbarProps(_ev) {
@@ -186,7 +184,7 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
       props.options.plugins = {};
     }
     if (this.additionalOpts_Plugins) {
-      props.options.plugins = this.additionalOpts_Plugins;
+      props.options.plugins = { ...props.options.plugins, ...this.additionalOpts_Plugins };
     }
 
     if (!props.options.elements) {
@@ -210,7 +208,7 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
       }
     };
 
-    const isPieOrDonut = this.chartType === NEURASIL_CHART_TYPE.DONUT || this.chartType === NEURASIL_CHART_TYPE.PIE;
+    const isPieOrDonut = this.toolbarProps.chartType === NEURASIL_CHART_TYPE.DONUT || this.toolbarProps.chartType === NEURASIL_CHART_TYPE.PIE;
     if (isPieOrDonut) {
       props.options.plugins.tooltip = {
         callbacks: {

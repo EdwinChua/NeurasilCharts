@@ -11,8 +11,7 @@ export class NeurasilChartsToolbarComponent {
   @Input() toolbarProps;
   @Output() toolbarPropsChange = new EventEmitter<any>();
   NEURASIL_CHART_TYPE = NEURASIL_CHART_TYPE;
-  toolbarPropsChanged(ev){
-    //console.log(ev)
+  toolbarPropsChanged(_ev) {
     this.toolbarPropsChange.emit(this.toolbarProps);
   }
 }

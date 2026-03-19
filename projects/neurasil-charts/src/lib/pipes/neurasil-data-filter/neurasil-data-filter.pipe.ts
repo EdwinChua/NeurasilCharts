@@ -18,7 +18,7 @@ export class NeurasilDataFilter implements PipeTransform {
     const excludeColumns: string[] = [];
 
     for (const term of filterTerms) {
-      if (term != null && term !== undefined && term.length > 1) {
+      if (term != null && term.length > 1) {
         const normalized = term.trim().toLowerCase();
         if (normalized[0] === "-") {
           excludeTerms.push(normalized.replace("-", "").trim());
@@ -45,7 +45,7 @@ export class NeurasilDataFilter implements PipeTransform {
     });
 
     if (includeColumns.length > 0 && excludeColumns.length > 0) {
-      window.alert("Unsupported usage of include & exclude columns. Things may break");
+      console.warn("Unsupported usage of include & exclude columns. Things may break");
     } else if (excludeColumns.length > 0) {
       data_Filtered = structuredClone(data_Filtered);
       for (const dataItem of data_Filtered) {
