@@ -135,9 +135,11 @@ export class NeurasilChartsService {
       responsive: true,
     };
     if (title) {
-      options.title = {
-        display: true,
-        text: title
+      options.plugins = {
+        title: {
+          display: true,
+          text: title
+        }
       };
     }
 
@@ -194,7 +196,7 @@ export class NeurasilChartsService {
       } else if (useAltAxis) {
         options.scales.yAxis_alt = {
           display: true,
-          ticks: { beginAtZero: true },
+          beginAtZero: true,
           position: 'right',
           type: 'linear',
           title: yAxisLabel_Alt
@@ -217,9 +219,6 @@ export class NeurasilChartsService {
     if (chartType === NEURASIL_CHART_TYPE.HORIZONTAL_BAR) {
       options.indexAxis = 'y';
     }
-
-    // Tooltip callbacks are set per chart type in the component (Chart.js v3 API)
-    options.tooltips = { callbacks: {} };
 
     let returnOpts = {
       plugins: [],
