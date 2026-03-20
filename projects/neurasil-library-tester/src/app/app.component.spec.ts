@@ -1,8 +1,13 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { UtilsService } from './utils.service';
+
+@Pipe({ name: 'neurasilDataFilter', standalone: false })
+class MockNeurasilDataFilterPipe implements PipeTransform {
+  transform(value: any): any { return value; }
+}
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -20,7 +25,7 @@ describe('AppComponent', () => {
     mockUtilsService.csvToJson.and.returnValue(fakeSampleData);
 
     TestBed.configureTestingModule({
-      declarations: [AppComponent],
+      declarations: [AppComponent, MockNeurasilDataFilterPipe],
       providers: [{ provide: UtilsService, useValue: mockUtilsService }],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();

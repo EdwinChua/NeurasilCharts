@@ -4,6 +4,7 @@ import { NEURASIL_CHART_TYPE } from '../models/NeurasilChartType'
 
 @Component({
   selector: 'neurasil-charts-toolbar',
+  standalone: false,
   templateUrl: './neurasil-charts-toolbar.component.html',
   styleUrls: ['./neurasil-charts-toolbar.component.sass']
 })

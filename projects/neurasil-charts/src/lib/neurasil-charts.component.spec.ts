@@ -58,7 +58,7 @@ describe('NeurasilChartsComponent', () => {
       'chartObjectBuilder',
       'performParetoAnalysis',
     ]);
-    mockService.parseDataFromDatasource.and.returnValue(PARSED_DATA);
+    mockService.parseDataFromDatasource.and.returnValue(PARSED_DATA as any);
     mockService.chartObjectBuilder.and.callFake(() => makeChartProps());
 
     mockPipe = jasmine.createSpyObj('NeurasilDataFilter', ['transform']);
@@ -72,7 +72,14 @@ describe('NeurasilChartsComponent', () => {
         { provide: NeurasilDataFilter,    useValue: mockPipe  },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+    })
+    // The component declares `providers: [NeurasilDataFilter]` which creates a
+    // component-level injector that overrides the module-level mock above.
+    // Override it here so drawChart receives the spy instead of the real pipe.
+    .overrideComponent(NeurasilChartsComponent, {
+      set: { providers: [{ provide: NeurasilDataFilter, useValue: mockPipe }] }
+    })
+    .compileComponents();
   }));
 
   beforeEach(() => {
@@ -203,27 +210,12 @@ describe('NeurasilChartsComponent', () => {
   });
 
   // ─── drawChart ────────────────────────────────────────────────────────────────
-  // These tests un-spy drawChart to exercise the real method.
+  // These tests let drawChart run the real implementation via callThrough.
 
   describe('drawChart (real execution)', () => {
-    beforeEach(waitForAsync(() => {
-      // Re-configure without the drawChart spy
-      TestBed.resetTestingModule();
-      TestBed.configureTestingModule({
-        imports: [CommonModule],
-        declarations: [NeurasilChartsComponent],
-        providers: [
-          { provide: NeurasilChartsService, useValue: mockService },
-          { provide: NeurasilDataFilter,    useValue: mockPipe  },
-        ],
-        schemas: [NO_ERRORS_SCHEMA],
-      }).compileComponents();
-    }));
-
     beforeEach(() => {
-      fixture = TestBed.createComponent(NeurasilChartsComponent);
-      component = fixture.componentInstance;
-      component.data = SAMPLE_DATA;
+      // Restore the real drawChart implementation for this block
+      (component.drawChart as jasmine.Spy).and.callThrough();
     });
 
     afterEach(() => {
@@ -232,7 +224,8 @@ describe('NeurasilChartsComponent', () => {
 
     it('should set hasData to false and skip chart creation when filtered data is empty', () => {
       mockPipe.transform.and.returnValue([]);
-      fixture.detectChanges();
+      component.canvas = { nativeElement: { getContext: () => ({}) } } as any;
+      NeurasilChartsComponent.prototype.drawChart.call(component);
       expect(component.hasData).toBeFalse();
       expect(mockService.chartObjectBuilder).not.toHaveBeenCalled();
     });
@@ -264,22 +257,22 @@ describe('NeurasilChartsComponent', () => {
       });
       component.additionalOpts_Plugins = { legend: { display: false } };
       fixture.detectChanges();
-      // If chart was created, the merged plugins object should have kept the title
-      // We can't inspect Chart.js internals but we can confirm it didn't throw
       expect(component._canvas).toBeDefined();
     });
 
     it('should combine globalFilter and _datasetFilter with a comma', () => {
       component.globalFilter = 'global';
       component.toolbarProps._datasetFilter = 'dataset';
-      fixture.detectChanges();
+      component.canvas = { nativeElement: { getContext: () => ({}) } } as any;
+      NeurasilChartsComponent.prototype.drawChart.call(component);
       expect(mockPipe.transform).toHaveBeenCalledWith(SAMPLE_DATA, 'global,dataset');
     });
 
     it('should use only globalFilter when _datasetFilter is empty', () => {
       component.globalFilter = 'myfilter';
       component.toolbarProps._datasetFilter = '';
-      fixture.detectChanges();
+      component.canvas = { nativeElement: { getContext: () => ({}) } } as any;
+      NeurasilChartsComponent.prototype.drawChart.call(component);
       expect(mockPipe.transform).toHaveBeenCalledWith(SAMPLE_DATA, 'myfilter');
     });
 
@@ -295,12 +288,10 @@ describe('NeurasilChartsComponent', () => {
       component.showDataLabels = true;
       mockService.chartObjectBuilder.and.callFake(() => {
         const p = makeChartProps();
-        // spy on plugins array push
         spyOn(p.plugins, 'push').and.callThrough();
         return p;
       });
       fixture.detectChanges();
-      // Chart still created — main assertion is no error thrown
       expect(component._canvas).toBeDefined();
     });
   });

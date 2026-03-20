@@ -11,6 +11,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'neurasil-charts',
+  standalone: false,
   templateUrl: './neurasil-charts.component.html',
   styleUrls: ['./neurasil-charts.component.sass'],
   providers: [NeurasilDataFilter]
@@ -88,7 +89,7 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
       this.toolbarProps.swapLabelsAndDatasets = this.swapLabelsAndDatasets;
     }
 
-    this.hasData = (this.data && this.data.length > 0);
+    this.hasData = !!(this.data && this.data.length > 0);
   }
 
   ngAfterViewInit() {

@@ -21,7 +21,17 @@
           "options": {
             "main": "projects/neurasil-charts/src/test.ts",
             "tsConfig": "projects/neurasil-charts/tsconfig.spec.json",
-            "karmaConfig": "projects/neurasil-charts/karma.conf.js"
+            "karmaConfig": "projects/neurasil-charts/karma.conf.js",
+            "fileReplacements": [
+              {
+                "replace": "node_modules/chart.js/dist/chart.js",
+                "with": "projects/neurasil-charts/src/chart-js.mock.js"
+              },
+              {
+                "replace": "node_modules/chart.js/dist/chart.cjs",
+                "with": "projects/neurasil-charts/src/chart-js.mock.js"
+              }
+            ]
           }
         },
       }
