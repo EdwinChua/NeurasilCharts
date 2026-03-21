@@ -4,6 +4,7 @@ import { NEURASIL_CHART_TYPE } from 'staticLibraryFiles/neurasil-charts/'
 
 @Component({
   selector: 'app-root',
+  standalone: false,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
