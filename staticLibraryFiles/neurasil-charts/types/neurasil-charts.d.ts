@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { PipeTransform, OnInit, AfterViewInit, OnChanges, ElementRef, EventEmitter, SimpleChanges } from '@angular/core';
+import { PipeTransform, OnInit, AfterViewInit, OnChanges, ElementRef, EventEmitter, ChangeDetectorRef, SimpleChanges } from '@angular/core';
 import * as i1 from '@angular/common';
 import * as i2 from '@angular/forms';
 
@@ -52,6 +52,7 @@ declare class NeurasilDataFilter implements PipeTransform {
 declare class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges {
     neurasilChartsService: NeurasilChartsService;
     neurasilDataFilter: NeurasilDataFilter;
+    private cdr;
     canvas: ElementRef;
     /** Data to plot */
     data: Array<any>;
@@ -99,9 +100,13 @@ declare class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChange
         _datasetFilter: string;
         swapLabelsAndDatasets: boolean;
     };
+    NEURASIL_CHART_TYPE: typeof NEURASIL_CHART_TYPE;
     _canvas: any;
     hasData: boolean;
-    constructor(neurasilChartsService: NeurasilChartsService, neurasilDataFilter: NeurasilDataFilter);
+    canvasVisible: boolean;
+    gridData: Array<any>;
+    gridColumns: string[];
+    constructor(neurasilChartsService: NeurasilChartsService, neurasilDataFilter: NeurasilDataFilter, cdr: ChangeDetectorRef);
     ngOnInit(): void;
     ngAfterViewInit(): void;
     ngOnChanges(_changes: SimpleChanges): void;
@@ -126,4 +131,6 @@ declare class NeurasilChartsModule {
     static ɵinj: i0.ɵɵInjectorDeclaration<NeurasilChartsModule>;
 }
 
-export { NEURASIL_CHART_TYPE, NeurasilChartsComponent, NeurasilChartsModule, NeurasilChartsService, NeurasilDataFilter };
+declare const BUILD_TIMESTAMP = "2026-03-24T10:39:11.441Z";
+
+export { BUILD_TIMESTAMP, NEURASIL_CHART_TYPE, NeurasilChartsComponent, NeurasilChartsModule, NeurasilChartsService, NeurasilDataFilter };

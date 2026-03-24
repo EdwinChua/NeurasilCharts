@@ -16,16 +16,15 @@
         <div class="chart-selector-container">
             <div class="chart-selector input-group input-group-sm">
                 <select class="form-control" [(ngModel)]="toolbarProps.chartType" (ngModelChange)="toolbarPropsChanged($event)">
-                    <option value='0'>Bar Chart</option>
-                    <option value='7'>Horizontal Bar</option>               
-                    <option value='2'>Stacked Bar Chart</option>
-                    <option value='3'>Line Chart</option>
-                    <option value='1'>Bar & Line Combo</option>
-                    <option value='4'>Pie</option>
-                    <option value='5'>Donut</option>
-                    <!-- <option value='8'>Pareto (1 dataset)</option> -->
-                    <option value='9'>Pareto Analysis</option>
-                    <option value='6'>Grid View</option>
+                    <option [ngValue]="NEURASIL_CHART_TYPE.BAR">Bar Chart</option>
+                    <option [ngValue]="NEURASIL_CHART_TYPE.HORIZONTAL_BAR">Horizontal Bar</option>
+                    <option [ngValue]="NEURASIL_CHART_TYPE.STACKED">Stacked Bar Chart</option>
+                    <option [ngValue]="NEURASIL_CHART_TYPE.LINE">Line Chart</option>
+                    <option [ngValue]="NEURASIL_CHART_TYPE.BAR_LINE">Bar & Line Combo</option>
+                    <option [ngValue]="NEURASIL_CHART_TYPE.PIE">Pie</option>
+                    <option [ngValue]="NEURASIL_CHART_TYPE.DONUT">Donut</option>
+                    <option [ngValue]="NEURASIL_CHART_TYPE.STACKED_PARETO">Pareto Analysis</option>
+                    <option [ngValue]="NEURASIL_CHART_TYPE.GRID">Grid View</option>
 
                 </select>
             </div>

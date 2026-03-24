@@ -464,7 +464,7 @@ class NeurasilChartsToolbarComponent {
         this.toolbarPropsChange.emit(this.toolbarProps);
     }
     static ɵfac = function NeurasilChartsToolbarComponent_Factory(__ngFactoryType__) { return new (__ngFactoryType__ || NeurasilChartsToolbarComponent)(); };
-    static ɵcmp = /*@__PURE__*/ i0.ɵɵdefineComponent({ type: NeurasilChartsToolbarComponent, selectors: [["neurasil-charts-toolbar"]], inputs: { toolbarProps: "toolbarProps" }, outputs: { toolbarPropsChange: "toolbarPropsChange" }, decls: 41, vars: 3, consts: [[1, "toolbar-container"], [1, "toolbar"], [1, "filter-textbox-container", "input-group", "input-group-sm"], ["type", "text", "placeholder", "Filters", 1, "filter-textbox", "form-control", "noSelect", 3, "ngModelChange", "change", "ngModel"], [1, "input-group", "input-group-sm", "filter-help"], [1, "tooltip_qd_chartHelper"], [1, "tooltiptext_qd_chartHelper"], [1, "chart-selector-container"], [1, "chart-selector", "input-group", "input-group-sm"], [1, "form-control", 3, "ngModelChange", "ngModel"], ["value", "0"], ["value", "7"], ["value", "2"], ["value", "3"], ["value", "1"], ["value", "4"], ["value", "5"], ["value", "9"], ["value", "6"], [2, "float", "right"], [2, "padding-top", "4px", "padding-right", "15px", "padding-left", "5px"], [2, "zoom", "0.8"], [1, "switch", "tooltip_qd_chartHelper"], ["type", "checkbox", "id", "${this.id}_swapCheckbox", 3, "ngModelChange", "ngModel"], [1, "slider", "round"]], template: function NeurasilChartsToolbarComponent_Template(rf, ctx) { if (rf & 1) {
+    static ɵcmp = /*@__PURE__*/ i0.ɵɵdefineComponent({ type: NeurasilChartsToolbarComponent, selectors: [["neurasil-charts-toolbar"]], inputs: { toolbarProps: "toolbarProps" }, outputs: { toolbarPropsChange: "toolbarPropsChange" }, decls: 41, vars: 12, consts: [[1, "toolbar-container"], [1, "toolbar"], [1, "filter-textbox-container", "input-group", "input-group-sm"], ["type", "text", "placeholder", "Filters", 1, "filter-textbox", "form-control", "noSelect", 3, "ngModelChange", "change", "ngModel"], [1, "input-group", "input-group-sm", "filter-help"], [1, "tooltip_qd_chartHelper"], [1, "tooltiptext_qd_chartHelper"], [1, "chart-selector-container"], [1, "chart-selector", "input-group", "input-group-sm"], [1, "form-control", 3, "ngModelChange", "ngModel"], [3, "ngValue"], [2, "float", "right"], [2, "padding-top", "4px", "padding-right", "15px", "padding-left", "5px"], [2, "zoom", "0.8"], [1, "switch", "tooltip_qd_chartHelper"], ["type", "checkbox", "id", "${this.id}_swapCheckbox", 3, "ngModelChange", "ngModel"], [1, "slider", "round"]], template: function NeurasilChartsToolbarComponent_Template(rf, ctx) { if (rf & 1) {
             i0.ɵɵelementStart(0, "div", 0)(1, "div", 1)(2, "div", 2)(3, "input", 3);
             i0.ɵɵtwoWayListener("ngModelChange", function NeurasilChartsToolbarComponent_Template_input_ngModelChange_3_listener($event) { i0.ɵɵtwoWayBindingSet(ctx.toolbarProps._datasetFilter, $event) || (ctx.toolbarProps._datasetFilter = $event); return $event; });
             i0.ɵɵlistener("change", function NeurasilChartsToolbarComponent_Template_input_change_3_listener($event) { return ctx.toolbarPropsChanged($event); });
@@ -482,35 +482,35 @@ class NeurasilChartsToolbarComponent {
             i0.ɵɵelementStart(15, "option", 10);
             i0.ɵɵtext(16, "Bar Chart");
             i0.ɵɵelementEnd();
-            i0.ɵɵelementStart(17, "option", 11);
+            i0.ɵɵelementStart(17, "option", 10);
             i0.ɵɵtext(18, "Horizontal Bar");
             i0.ɵɵelementEnd();
-            i0.ɵɵelementStart(19, "option", 12);
+            i0.ɵɵelementStart(19, "option", 10);
             i0.ɵɵtext(20, "Stacked Bar Chart");
             i0.ɵɵelementEnd();
-            i0.ɵɵelementStart(21, "option", 13);
+            i0.ɵɵelementStart(21, "option", 10);
             i0.ɵɵtext(22, "Line Chart");
             i0.ɵɵelementEnd();
-            i0.ɵɵelementStart(23, "option", 14);
+            i0.ɵɵelementStart(23, "option", 10);
             i0.ɵɵtext(24, "Bar & Line Combo");
             i0.ɵɵelementEnd();
-            i0.ɵɵelementStart(25, "option", 15);
+            i0.ɵɵelementStart(25, "option", 10);
             i0.ɵɵtext(26, "Pie");
             i0.ɵɵelementEnd();
-            i0.ɵɵelementStart(27, "option", 16);
+            i0.ɵɵelementStart(27, "option", 10);
             i0.ɵɵtext(28, "Donut");
             i0.ɵɵelementEnd();
-            i0.ɵɵelementStart(29, "option", 17);
+            i0.ɵɵelementStart(29, "option", 10);
             i0.ɵɵtext(30, "Pareto Analysis");
             i0.ɵɵelementEnd();
-            i0.ɵɵelementStart(31, "option", 18);
+            i0.ɵɵelementStart(31, "option", 10);
             i0.ɵɵtext(32, "Grid View");
             i0.ɵɵelementEnd()()();
-            i0.ɵɵelementStart(33, "div", 19)(34, "div", 20)(35, "span", 21)(36, "label", 22)(37, "input", 23);
+            i0.ɵɵelementStart(33, "div", 11)(34, "div", 12)(35, "span", 13)(36, "label", 14)(37, "input", 15);
             i0.ɵɵtwoWayListener("ngModelChange", function NeurasilChartsToolbarComponent_Template_input_ngModelChange_37_listener($event) { i0.ɵɵtwoWayBindingSet(ctx.toolbarProps.swapLabelsAndDatasets, $event) || (ctx.toolbarProps.swapLabelsAndDatasets = $event); return $event; });
             i0.ɵɵlistener("ngModelChange", function NeurasilChartsToolbarComponent_Template_input_ngModelChange_37_listener($event) { return ctx.toolbarPropsChanged($event); });
             i0.ɵɵelementEnd();
-            i0.ɵɵelement(38, "span", 24);
+            i0.ɵɵelement(38, "span", 16);
             i0.ɵɵelementStart(39, "span", 6);
             i0.ɵɵtext(40, " Swap labels and datasets ");
             i0.ɵɵelementEnd()()()()()()()();
@@ -519,13 +519,31 @@ class NeurasilChartsToolbarComponent {
             i0.ɵɵtwoWayProperty("ngModel", ctx.toolbarProps._datasetFilter);
             i0.ɵɵadvance(11);
             i0.ɵɵtwoWayProperty("ngModel", ctx.toolbarProps.chartType);
-            i0.ɵɵadvance(23);
+            i0.ɵɵadvance();
+            i0.ɵɵproperty("ngValue", ctx.NEURASIL_CHART_TYPE.BAR);
+            i0.ɵɵadvance(2);
+            i0.ɵɵproperty("ngValue", ctx.NEURASIL_CHART_TYPE.HORIZONTAL_BAR);
+            i0.ɵɵadvance(2);
+            i0.ɵɵproperty("ngValue", ctx.NEURASIL_CHART_TYPE.STACKED);
+            i0.ɵɵadvance(2);
+            i0.ɵɵproperty("ngValue", ctx.NEURASIL_CHART_TYPE.LINE);
+            i0.ɵɵadvance(2);
+            i0.ɵɵproperty("ngValue", ctx.NEURASIL_CHART_TYPE.BAR_LINE);
+            i0.ɵɵadvance(2);
+            i0.ɵɵproperty("ngValue", ctx.NEURASIL_CHART_TYPE.PIE);
+            i0.ɵɵadvance(2);
+            i0.ɵɵproperty("ngValue", ctx.NEURASIL_CHART_TYPE.DONUT);
+            i0.ɵɵadvance(2);
+            i0.ɵɵproperty("ngValue", ctx.NEURASIL_CHART_TYPE.STACKED_PARETO);
+            i0.ɵɵadvance(2);
+            i0.ɵɵproperty("ngValue", ctx.NEURASIL_CHART_TYPE.GRID);
+            i0.ɵɵadvance(6);
             i0.ɵɵtwoWayProperty("ngModel", ctx.toolbarProps.swapLabelsAndDatasets);
         } }, dependencies: [FormsModule, i1.NgSelectOption, i1.ɵNgSelectMultipleOption, i1.DefaultValueAccessor, i1.CheckboxControlValueAccessor, i1.SelectControlValueAccessor, i1.NgControlStatus, i1.NgModel], styles: [".toolbar-container[_ngcontent-%COMP%]{width:100%;height:100%;display:flex;flex-flow:column}.toolbar[_ngcontent-%COMP%]{background-color:#d3d3d3;padding:4px;border-radius:8px 8px 0 0}.filter-textbox-container[_ngcontent-%COMP%]{padding-top:4px;float:left;width:40%;padding-left:15px}.filter-textbox[_ngcontent-%COMP%]{width:100%;border:0px;background-color:#d3d3d3;border-bottom:2px solid darkgrey}.filter-textbox[_ngcontent-%COMP%]:focus{border:0px;border-bottom:2px solid black;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;-webkit-tap-highlight-color:transparent;user-select:none;outline:none}.filter-help[_ngcontent-%COMP%]{padding-top:4px;float:left}.chart-selector-container[_ngcontent-%COMP%]{float:right}.chart-selector[_ngcontent-%COMP%]{padding-top:4px;float:left}select[_ngcontent-%COMP%]{width:80px}.switch[_ngcontent-%COMP%]{position:relative;display:inline-block;width:60px;height:34px}.switch[_ngcontent-%COMP%]   input[_ngcontent-%COMP%]{display:none}.slider[_ngcontent-%COMP%]{position:absolute;cursor:pointer;inset:0;background-color:#ccc;-webkit-transition:.4s;transition:.4s}.slider[_ngcontent-%COMP%]:before{position:absolute;content:\"\";height:26px;width:26px;left:4px;bottom:4px;background-color:#fff;-webkit-transition:.4s;transition:.4s}input[_ngcontent-%COMP%]:checked + .slider[_ngcontent-%COMP%]{background-color:#2196f3}input[_ngcontent-%COMP%]:focus + .slider[_ngcontent-%COMP%]{box-shadow:0 0 1px #2196f3}input[_ngcontent-%COMP%]:checked + .slider[_ngcontent-%COMP%]:before{-webkit-transform:translateX(26px);-ms-transform:translateX(26px);transform:translate(26px)}.slider.round[_ngcontent-%COMP%]{border-radius:34px}.slider.round[_ngcontent-%COMP%]:before{border-radius:50%}.tooltip_qd_chartHelper[_ngcontent-%COMP%]{position:relative;display:inline-block}.tooltip_qd_chartHelper[_ngcontent-%COMP%]   .tooltiptext_qd_chartHelper[_ngcontent-%COMP%]{visibility:hidden;width:120px;background-color:#000;color:#fff;text-align:center;padding:5px 0;border-radius:6px;position:absolute;z-index:1;margin-top:40px}.tooltip_qd_chartHelper[_ngcontent-%COMP%]:hover   .tooltiptext_qd_chartHelper[_ngcontent-%COMP%]{visibility:visible}"] });
 }
 (() => { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(NeurasilChartsToolbarComponent, [{
         type: Component,
-        args: [{ selector: 'neurasil-charts-toolbar', imports: [FormsModule], template: "<div class=\"toolbar-container\" >\r\n    <div class=\"toolbar\">\r\n        <div class=\"filter-textbox-container input-group input-group-sm\">\r\n            <input type=\"text\" class=\"filter-textbox form-control noSelect\" placeholder=\"Filters\" [(ngModel)]=\"toolbarProps._datasetFilter\" (change)=\"toolbarPropsChanged($event)\">\r\n        </div>\r\n        <div class=\"input-group input-group-sm filter-help\" >\r\n            <div class=\"tooltip_qd_chartHelper\">?\r\n                <span class=\"tooltiptext_qd_chartHelper\">\r\n                To filter data, use commas to separate data, add - to exclude data.\r\n                <br> <br> \r\n                EITHER use ~ to include columns OR ~! to exclude columns.\r\n                </span>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"chart-selector-container\">\r\n            <div class=\"chart-selector input-group input-group-sm\">\r\n                <select class=\"form-control\" [(ngModel)]=\"toolbarProps.chartType\" (ngModelChange)=\"toolbarPropsChanged($event)\">\r\n                    <option value='0'>Bar Chart</option>\r\n                    <option value='7'>Horizontal Bar</option>               \r\n                    <option value='2'>Stacked Bar Chart</option>\r\n                    <option value='3'>Line Chart</option>\r\n                    <option value='1'>Bar & Line Combo</option>\r\n                    <option value='4'>Pie</option>\r\n                    <option value='5'>Donut</option>\r\n                    <!-- <option value='8'>Pareto (1 dataset)</option> -->\r\n                    <option value='9'>Pareto Analysis</option>\r\n                    <option value='6'>Grid View</option>\r\n\r\n                </select>\r\n            </div>\r\n            <div style=\"float:right\">\r\n                <div style=\"padding-top:4px;padding-right: 15px; padding-left:5px\">\r\n                    <span style=\"zoom:0.8;\">\r\n                        <label class=\"switch tooltip_qd_chartHelper\" >\r\n                        <input type='checkbox' id='${this.id}_swapCheckbox'  [(ngModel)]=\"toolbarProps.swapLabelsAndDatasets\" (ngModelChange)=\"toolbarPropsChanged($event)\">\r\n                            <span class=\"slider round\"></span>\r\n                            <span class=\"tooltiptext_qd_chartHelper\">\r\n                                Swap labels and datasets\r\n                            </span>\r\n                        </label>\r\n                    </span>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>", styles: [".toolbar-container{width:100%;height:100%;display:flex;flex-flow:column}.toolbar{background-color:#d3d3d3;padding:4px;border-radius:8px 8px 0 0}.filter-textbox-container{padding-top:4px;float:left;width:40%;padding-left:15px}.filter-textbox{width:100%;border:0px;background-color:#d3d3d3;border-bottom:2px solid darkgrey}.filter-textbox:focus{border:0px;border-bottom:2px solid black;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;-webkit-tap-highlight-color:transparent;user-select:none;outline:none}.filter-help{padding-top:4px;float:left}.chart-selector-container{float:right}.chart-selector{padding-top:4px;float:left}select{width:80px}.switch{position:relative;display:inline-block;width:60px;height:34px}.switch input{display:none}.slider{position:absolute;cursor:pointer;inset:0;background-color:#ccc;-webkit-transition:.4s;transition:.4s}.slider:before{position:absolute;content:\"\";height:26px;width:26px;left:4px;bottom:4px;background-color:#fff;-webkit-transition:.4s;transition:.4s}input:checked+.slider{background-color:#2196f3}input:focus+.slider{box-shadow:0 0 1px #2196f3}input:checked+.slider:before{-webkit-transform:translateX(26px);-ms-transform:translateX(26px);transform:translate(26px)}.slider.round{border-radius:34px}.slider.round:before{border-radius:50%}.tooltip_qd_chartHelper{position:relative;display:inline-block}.tooltip_qd_chartHelper .tooltiptext_qd_chartHelper{visibility:hidden;width:120px;background-color:#000;color:#fff;text-align:center;padding:5px 0;border-radius:6px;position:absolute;z-index:1;margin-top:40px}.tooltip_qd_chartHelper:hover .tooltiptext_qd_chartHelper{visibility:visible}\n"] }]
+        args: [{ selector: 'neurasil-charts-toolbar', imports: [FormsModule], template: "<div class=\"toolbar-container\" >\r\n    <div class=\"toolbar\">\r\n        <div class=\"filter-textbox-container input-group input-group-sm\">\r\n            <input type=\"text\" class=\"filter-textbox form-control noSelect\" placeholder=\"Filters\" [(ngModel)]=\"toolbarProps._datasetFilter\" (change)=\"toolbarPropsChanged($event)\">\r\n        </div>\r\n        <div class=\"input-group input-group-sm filter-help\" >\r\n            <div class=\"tooltip_qd_chartHelper\">?\r\n                <span class=\"tooltiptext_qd_chartHelper\">\r\n                To filter data, use commas to separate data, add - to exclude data.\r\n                <br> <br> \r\n                EITHER use ~ to include columns OR ~! to exclude columns.\r\n                </span>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"chart-selector-container\">\r\n            <div class=\"chart-selector input-group input-group-sm\">\r\n                <select class=\"form-control\" [(ngModel)]=\"toolbarProps.chartType\" (ngModelChange)=\"toolbarPropsChanged($event)\">\r\n                    <option [ngValue]=\"NEURASIL_CHART_TYPE.BAR\">Bar Chart</option>\r\n                    <option [ngValue]=\"NEURASIL_CHART_TYPE.HORIZONTAL_BAR\">Horizontal Bar</option>\r\n                    <option [ngValue]=\"NEURASIL_CHART_TYPE.STACKED\">Stacked Bar Chart</option>\r\n                    <option [ngValue]=\"NEURASIL_CHART_TYPE.LINE\">Line Chart</option>\r\n                    <option [ngValue]=\"NEURASIL_CHART_TYPE.BAR_LINE\">Bar & Line Combo</option>\r\n                    <option [ngValue]=\"NEURASIL_CHART_TYPE.PIE\">Pie</option>\r\n                    <option [ngValue]=\"NEURASIL_CHART_TYPE.DONUT\">Donut</option>\r\n                    <option [ngValue]=\"NEURASIL_CHART_TYPE.STACKED_PARETO\">Pareto Analysis</option>\r\n                    <option [ngValue]=\"NEURASIL_CHART_TYPE.GRID\">Grid View</option>\r\n\r\n                </select>\r\n            </div>\r\n            <div style=\"float:right\">\r\n                <div style=\"padding-top:4px;padding-right: 15px; padding-left:5px\">\r\n                    <span style=\"zoom:0.8;\">\r\n                        <label class=\"switch tooltip_qd_chartHelper\" >\r\n                        <input type='checkbox' id='${this.id}_swapCheckbox'  [(ngModel)]=\"toolbarProps.swapLabelsAndDatasets\" (ngModelChange)=\"toolbarPropsChanged($event)\">\r\n                            <span class=\"slider round\"></span>\r\n                            <span class=\"tooltiptext_qd_chartHelper\">\r\n                                Swap labels and datasets\r\n                            </span>\r\n                        </label>\r\n                    </span>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>", styles: [".toolbar-container{width:100%;height:100%;display:flex;flex-flow:column}.toolbar{background-color:#d3d3d3;padding:4px;border-radius:8px 8px 0 0}.filter-textbox-container{padding-top:4px;float:left;width:40%;padding-left:15px}.filter-textbox{width:100%;border:0px;background-color:#d3d3d3;border-bottom:2px solid darkgrey}.filter-textbox:focus{border:0px;border-bottom:2px solid black;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;-webkit-tap-highlight-color:transparent;user-select:none;outline:none}.filter-help{padding-top:4px;float:left}.chart-selector-container{float:right}.chart-selector{padding-top:4px;float:left}select{width:80px}.switch{position:relative;display:inline-block;width:60px;height:34px}.switch input{display:none}.slider{position:absolute;cursor:pointer;inset:0;background-color:#ccc;-webkit-transition:.4s;transition:.4s}.slider:before{position:absolute;content:\"\";height:26px;width:26px;left:4px;bottom:4px;background-color:#fff;-webkit-transition:.4s;transition:.4s}input:checked+.slider{background-color:#2196f3}input:focus+.slider{box-shadow:0 0 1px #2196f3}input:checked+.slider:before{-webkit-transform:translateX(26px);-ms-transform:translateX(26px);transform:translate(26px)}.slider.round{border-radius:34px}.slider.round:before{border-radius:50%}.tooltip_qd_chartHelper{position:relative;display:inline-block}.tooltip_qd_chartHelper .tooltiptext_qd_chartHelper{visibility:hidden;width:120px;background-color:#000;color:#fff;text-align:center;padding:5px 0;border-radius:6px;position:absolute;z-index:1;margin-top:40px}.tooltip_qd_chartHelper:hover .tooltiptext_qd_chartHelper{visibility:visible}\n"] }]
     }], null, { toolbarProps: [{
             type: Input
         }], toolbarPropsChange: [{
@@ -536,7 +554,7 @@ class NeurasilChartsToolbarComponent {
 const _c0 = ["neurasilChartCanvas"];
 function NeurasilChartsComponent_Conditional_1_Template(rf, ctx) { if (rf & 1) {
     const _r1 = i0.ɵɵgetCurrentView();
-    i0.ɵɵelementStart(0, "div", 2)(1, "neurasil-charts-toolbar", 6);
+    i0.ɵɵelementStart(0, "div", 2)(1, "neurasil-charts-toolbar", 5);
     i0.ɵɵtwoWayListener("toolbarPropsChange", function NeurasilChartsComponent_Conditional_1_Template_neurasil_charts_toolbar_toolbarPropsChange_1_listener($event) { i0.ɵɵrestoreView(_r1); const ctx_r1 = i0.ɵɵnextContext(); i0.ɵɵtwoWayBindingSet(ctx_r1.toolbarProps, $event) || (ctx_r1.toolbarProps = $event); return i0.ɵɵresetView($event); });
     i0.ɵɵlistener("toolbarPropsChange", function NeurasilChartsComponent_Conditional_1_Template_neurasil_charts_toolbar_toolbarPropsChange_1_listener($event) { i0.ɵɵrestoreView(_r1); const ctx_r1 = i0.ɵɵnextContext(); return i0.ɵɵresetView(ctx_r1.updateToolbarProps($event)); });
     i0.ɵɵelementEnd()();
@@ -545,19 +563,95 @@ function NeurasilChartsComponent_Conditional_1_Template(rf, ctx) { if (rf & 1) {
     i0.ɵɵadvance();
     i0.ɵɵtwoWayProperty("toolbarProps", ctx_r1.toolbarProps);
 } }
-function NeurasilChartsComponent_Conditional_5_Template(rf, ctx) { if (rf & 1) {
-    i0.ɵɵelementStart(0, "div", 5)(1, "div", 7);
+function NeurasilChartsComponent_Conditional_3_Conditional_0_Template(rf, ctx) { if (rf & 1) {
+    i0.ɵɵelement(0, "canvas", 6, 0);
+} if (rf & 2) {
+    const ctx_r1 = i0.ɵɵnextContext(2);
+    i0.ɵɵproperty("ngClass", ctx_r1.hasData ? "" : "canvas-hidden");
+} }
+function NeurasilChartsComponent_Conditional_3_Conditional_1_Template(rf, ctx) { if (rf & 1) {
+    i0.ɵɵelementStart(0, "div", 7)(1, "div", 8);
     i0.ɵɵtext(2);
     i0.ɵɵelementEnd()();
 } if (rf & 2) {
-    const ctx_r1 = i0.ɵɵnextContext();
+    const ctx_r1 = i0.ɵɵnextContext(2);
     i0.ɵɵadvance(2);
     i0.ɵɵtextInterpolate1(" ", ctx_r1.noDataMessage, " ");
+} }
+function NeurasilChartsComponent_Conditional_3_Template(rf, ctx) { if (rf & 1) {
+    i0.ɵɵconditionalCreate(0, NeurasilChartsComponent_Conditional_3_Conditional_0_Template, 2, 1, "canvas", 6);
+    i0.ɵɵconditionalCreate(1, NeurasilChartsComponent_Conditional_3_Conditional_1_Template, 3, 1, "div", 7);
+} if (rf & 2) {
+    const ctx_r1 = i0.ɵɵnextContext();
+    i0.ɵɵconditional(ctx_r1.canvasVisible ? 0 : -1);
+    i0.ɵɵadvance();
+    i0.ɵɵconditional(!ctx_r1.hasData ? 1 : -1);
+} }
+function NeurasilChartsComponent_Conditional_4_Conditional_1_For_4_Template(rf, ctx) { if (rf & 1) {
+    i0.ɵɵelementStart(0, "th");
+    i0.ɵɵtext(1);
+    i0.ɵɵelementEnd();
+} if (rf & 2) {
+    const col_r3 = ctx.$implicit;
+    i0.ɵɵadvance();
+    i0.ɵɵtextInterpolate(col_r3);
+} }
+function NeurasilChartsComponent_Conditional_4_Conditional_1_For_7_For_2_Template(rf, ctx) { if (rf & 1) {
+    i0.ɵɵelementStart(0, "td");
+    i0.ɵɵtext(1);
+    i0.ɵɵelementEnd();
+} if (rf & 2) {
+    const col_r4 = ctx.$implicit;
+    const row_r5 = i0.ɵɵnextContext().$implicit;
+    i0.ɵɵadvance();
+    i0.ɵɵtextInterpolate(row_r5[col_r4]);
+} }
+function NeurasilChartsComponent_Conditional_4_Conditional_1_For_7_Template(rf, ctx) { if (rf & 1) {
+    i0.ɵɵelementStart(0, "tr");
+    i0.ɵɵrepeaterCreate(1, NeurasilChartsComponent_Conditional_4_Conditional_1_For_7_For_2_Template, 2, 1, "td", null, i0.ɵɵrepeaterTrackByIdentity);
+    i0.ɵɵelementEnd();
+} if (rf & 2) {
+    const ctx_r1 = i0.ɵɵnextContext(3);
+    i0.ɵɵadvance();
+    i0.ɵɵrepeater(ctx_r1.gridColumns);
+} }
+function NeurasilChartsComponent_Conditional_4_Conditional_1_Template(rf, ctx) { if (rf & 1) {
+    i0.ɵɵelementStart(0, "table", 9)(1, "thead")(2, "tr");
+    i0.ɵɵrepeaterCreate(3, NeurasilChartsComponent_Conditional_4_Conditional_1_For_4_Template, 2, 1, "th", null, i0.ɵɵrepeaterTrackByIdentity);
+    i0.ɵɵelementEnd()();
+    i0.ɵɵelementStart(5, "tbody");
+    i0.ɵɵrepeaterCreate(6, NeurasilChartsComponent_Conditional_4_Conditional_1_For_7_Template, 3, 0, "tr", null, i0.ɵɵrepeaterTrackByIndex);
+    i0.ɵɵelementEnd()();
+} if (rf & 2) {
+    const ctx_r1 = i0.ɵɵnextContext(2);
+    i0.ɵɵadvance(3);
+    i0.ɵɵrepeater(ctx_r1.gridColumns);
+    i0.ɵɵadvance(3);
+    i0.ɵɵrepeater(ctx_r1.gridData);
+} }
+function NeurasilChartsComponent_Conditional_4_Conditional_2_Template(rf, ctx) { if (rf & 1) {
+    i0.ɵɵelementStart(0, "div", 7)(1, "div", 8);
+    i0.ɵɵtext(2);
+    i0.ɵɵelementEnd()();
+} if (rf & 2) {
+    const ctx_r1 = i0.ɵɵnextContext(2);
+    i0.ɵɵadvance(2);
+    i0.ɵɵtextInterpolate(ctx_r1.noDataMessage);
+} }
+function NeurasilChartsComponent_Conditional_4_Template(rf, ctx) { if (rf & 1) {
+    i0.ɵɵelementStart(0, "div", 4);
+    i0.ɵɵconditionalCreate(1, NeurasilChartsComponent_Conditional_4_Conditional_1_Template, 8, 0, "table", 9)(2, NeurasilChartsComponent_Conditional_4_Conditional_2_Template, 3, 1, "div", 7);
+    i0.ɵɵelementEnd();
+} if (rf & 2) {
+    const ctx_r1 = i0.ɵɵnextContext();
+    i0.ɵɵadvance();
+    i0.ɵɵconditional(ctx_r1.gridData.length > 0 ? 1 : 2);
 } }
 Chart.register(...registerables);
 class NeurasilChartsComponent {
     neurasilChartsService;
     neurasilDataFilter;
+    cdr;
     canvas;
     /** Data to plot */
     data;
@@ -605,11 +699,16 @@ class NeurasilChartsComponent {
         _datasetFilter: "",
         swapLabelsAndDatasets: false
     };
+    NEURASIL_CHART_TYPE = NEURASIL_CHART_TYPE;
     _canvas;
     hasData;
-    constructor(neurasilChartsService, neurasilDataFilter) {
+    canvasVisible = true;
+    gridData = [];
+    gridColumns = [];
+    constructor(neurasilChartsService, neurasilDataFilter, cdr) {
         this.neurasilChartsService = neurasilChartsService;
         this.neurasilDataFilter = neurasilDataFilter;
+        this.cdr = cdr;
     }
     ngOnInit() {
         if (this.chartType) {
@@ -633,18 +732,35 @@ class NeurasilChartsComponent {
         this.drawChart();
     }
     drawChart(isPrinting = false) {
-        if (this._canvas) {
-            this._canvas.destroy();
-        }
-        if (!this.canvas) {
-            return;
-        }
-        const ctx = this.canvas.nativeElement.getContext('2d');
         const filterString = [this.globalFilter, this.toolbarProps._datasetFilter]
             .filter(Boolean)
             .join(',');
         const filteredData = this.neurasilDataFilter.transform(this.data, filterString);
         this.hasData = !!(filteredData && filteredData.length > 0);
+        if (this.toolbarProps.chartType === NEURASIL_CHART_TYPE.GRID) {
+            this.gridData = filteredData || [];
+            this.gridColumns = this.gridData.length > 0 ? Object.keys(this.gridData[0]) : [];
+            if (this._canvas) {
+                this._canvas.destroy();
+                this._canvas = null;
+            }
+            return;
+        }
+        if (this._canvas) {
+            this._canvas.destroy();
+            this._canvas = null;
+            this.canvasVisible = false;
+            this.cdr.detectChanges();
+            this.canvasVisible = true;
+            this.cdr.detectChanges();
+        }
+        else {
+            this.cdr.detectChanges();
+        }
+        if (!this.canvas) {
+            return;
+        }
+        const ctx = this.canvas.nativeElement.getContext('2d');
         if (!this.hasData) {
             return;
         }
@@ -727,32 +843,29 @@ class NeurasilChartsComponent {
         }
         this._canvas = new Chart(ctx, props);
     }
-    static ɵfac = function NeurasilChartsComponent_Factory(__ngFactoryType__) { return new (__ngFactoryType__ || NeurasilChartsComponent)(i0.ɵɵdirectiveInject(NeurasilChartsService), i0.ɵɵdirectiveInject(NeurasilDataFilter)); };
+    static ɵfac = function NeurasilChartsComponent_Factory(__ngFactoryType__) { return new (__ngFactoryType__ || NeurasilChartsComponent)(i0.ɵɵdirectiveInject(NeurasilChartsService), i0.ɵɵdirectiveInject(NeurasilDataFilter), i0.ɵɵdirectiveInject(i0.ChangeDetectorRef)); };
     static ɵcmp = /*@__PURE__*/ i0.ɵɵdefineComponent({ type: NeurasilChartsComponent, selectors: [["neurasil-charts"]], viewQuery: function NeurasilChartsComponent_Query(rf, ctx) { if (rf & 1) {
             i0.ɵɵviewQuery(_c0, 5);
         } if (rf & 2) {
             let _t;
             i0.ɵɵqueryRefresh(_t = i0.ɵɵloadQuery()) && (ctx.canvas = _t.first);
-        } }, inputs: { data: "data", showToolbar: "showToolbar", chartType: "chartType", useAltAxis: "useAltAxis", chartTitle: "chartTitle", xAxisLabelText: "xAxisLabelText", yAxisLabelText: "yAxisLabelText", yAxisLabelText_Alt: "yAxisLabelText_Alt", colorPalette: "colorPalette", hoverOpacity: "hoverOpacity", defaultOpacity: "defaultOpacity", hoverOpacity_border: "hoverOpacity_border", defaultOpacity_border: "defaultOpacity_border", swapLabelsAndDatasets: "swapLabelsAndDatasets", globalFilter: "globalFilter", showDataLabels: "showDataLabels", noDataMessage: "noDataMessage", additionalOpts_Plugins: "additionalOpts_Plugins", additionalOpts_Elements: "additionalOpts_Elements", useLogScale: "useLogScale" }, outputs: { chartTypeChange: "chartTypeChange", showToolbarChange: "showToolbarChange", swapLabelsAndDatasetsChange: "swapLabelsAndDatasetsChange", dataOnClick: "dataOnClick" }, features: [i0.ɵɵProvidersFeature([NeurasilDataFilter]), i0.ɵɵNgOnChangesFeature], decls: 6, vars: 3, consts: [["neurasilChartCanvas", ""], [1, "component-wrapper"], [1, "toolbar-wrapper"], [1, "canvas-wrapper"], ["id", "neurasilChartCanvas", 3, "ngClass"], [1, "overlay"], [3, "toolbarPropsChange", "toolbarProps"], [1, "overlay-contents"]], template: function NeurasilChartsComponent_Template(rf, ctx) { if (rf & 1) {
+        } }, inputs: { data: "data", showToolbar: "showToolbar", chartType: "chartType", useAltAxis: "useAltAxis", chartTitle: "chartTitle", xAxisLabelText: "xAxisLabelText", yAxisLabelText: "yAxisLabelText", yAxisLabelText_Alt: "yAxisLabelText_Alt", colorPalette: "colorPalette", hoverOpacity: "hoverOpacity", defaultOpacity: "defaultOpacity", hoverOpacity_border: "hoverOpacity_border", defaultOpacity_border: "defaultOpacity_border", swapLabelsAndDatasets: "swapLabelsAndDatasets", globalFilter: "globalFilter", showDataLabels: "showDataLabels", noDataMessage: "noDataMessage", additionalOpts_Plugins: "additionalOpts_Plugins", additionalOpts_Elements: "additionalOpts_Elements", useLogScale: "useLogScale" }, outputs: { chartTypeChange: "chartTypeChange", showToolbarChange: "showToolbarChange", swapLabelsAndDatasetsChange: "swapLabelsAndDatasetsChange", dataOnClick: "dataOnClick" }, features: [i0.ɵɵProvidersFeature([NeurasilDataFilter]), i0.ɵɵNgOnChangesFeature], decls: 5, vars: 2, consts: [["neurasilChartCanvas", ""], [1, "component-wrapper"], [1, "toolbar-wrapper"], [1, "canvas-wrapper"], [1, "grid-wrapper"], [3, "toolbarPropsChange", "toolbarProps"], ["id", "neurasilChartCanvas", 3, "ngClass"], [1, "overlay"], [1, "overlay-contents"], [1, "grid-table"]], template: function NeurasilChartsComponent_Template(rf, ctx) { if (rf & 1) {
             i0.ɵɵelementStart(0, "div", 1);
             i0.ɵɵconditionalCreate(1, NeurasilChartsComponent_Conditional_1_Template, 2, 1, "div", 2);
             i0.ɵɵelementStart(2, "div", 3);
-            i0.ɵɵelement(3, "canvas", 4, 0);
-            i0.ɵɵconditionalCreate(5, NeurasilChartsComponent_Conditional_5_Template, 3, 1, "div", 5);
+            i0.ɵɵconditionalCreate(3, NeurasilChartsComponent_Conditional_3_Template, 2, 2)(4, NeurasilChartsComponent_Conditional_4_Template, 3, 1, "div", 4);
             i0.ɵɵelementEnd()();
         } if (rf & 2) {
             i0.ɵɵadvance();
             i0.ɵɵconditional(ctx.showToolbar ? 1 : -1);
             i0.ɵɵadvance(2);
-            i0.ɵɵproperty("ngClass", ctx.hasData ? "" : "canvas-hidden");
-            i0.ɵɵadvance(2);
-            i0.ɵɵconditional(!ctx.hasData ? 5 : -1);
-        } }, dependencies: [NeurasilChartsToolbarComponent, NgClass], styles: [".canvas-wrapper[_ngcontent-%COMP%], neurasil-charts-toolbar[_ngcontent-%COMP%]{display:block}.component-wrapper[_ngcontent-%COMP%]{width:100%;height:100%}.toolbar-wrapper[_ngcontent-%COMP%]{display:block;height:50px}.component-wrapper[_ngcontent-%COMP%]{display:flex;flex-flow:column;height:100%}.canvas-wrapper[_ngcontent-%COMP%]{flex:1}.canvas-hidden[_ngcontent-%COMP%]{display:none}.overlay[_ngcontent-%COMP%]{width:100%;height:100%;background-color:#0000001a}.overlay-contents[_ngcontent-%COMP%]{font-family:sans-serif;left:50%;float:left;top:50%;transform:translate(-50%,-50%);position:relative}"] });
+            i0.ɵɵconditional(ctx.toolbarProps.chartType !== ctx.NEURASIL_CHART_TYPE.GRID ? 3 : 4);
+        } }, dependencies: [NeurasilChartsToolbarComponent, NgClass], styles: [".canvas-wrapper[_ngcontent-%COMP%], neurasil-charts-toolbar[_ngcontent-%COMP%]{display:block}.component-wrapper[_ngcontent-%COMP%]{width:100%;height:100%}.toolbar-wrapper[_ngcontent-%COMP%]{display:block;height:50px}.component-wrapper[_ngcontent-%COMP%]{display:flex;flex-flow:column;height:100%}.canvas-wrapper[_ngcontent-%COMP%]{flex:1}.canvas-hidden[_ngcontent-%COMP%]{display:none}.grid-wrapper[_ngcontent-%COMP%]{width:100%;height:100%;overflow:auto}.grid-table[_ngcontent-%COMP%]{width:100%;border-collapse:collapse;font-family:sans-serif;font-size:.875rem}.grid-table[_ngcontent-%COMP%]   th[_ngcontent-%COMP%], .grid-table[_ngcontent-%COMP%]   td[_ngcontent-%COMP%]{border:1px solid #ddd;padding:6px 10px;text-align:left;white-space:nowrap}.grid-table[_ngcontent-%COMP%]   th[_ngcontent-%COMP%]{background-color:#f0f0f0;font-weight:600;position:sticky;top:0}.grid-table[_ngcontent-%COMP%]   tr[_ngcontent-%COMP%]:nth-child(2n){background-color:#f9f9f9}.grid-table[_ngcontent-%COMP%]   tr[_ngcontent-%COMP%]:hover{background-color:#eef4ff}.overlay[_ngcontent-%COMP%]{width:100%;height:100%;background-color:#0000001a}.overlay-contents[_ngcontent-%COMP%]{font-family:sans-serif;left:50%;float:left;top:50%;transform:translate(-50%,-50%);position:relative}"] });
 }
 (() => { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(NeurasilChartsComponent, [{
         type: Component,
-        args: [{ selector: 'neurasil-charts', providers: [NeurasilDataFilter], imports: [NeurasilChartsToolbarComponent, NgClass], template: "\n<div class=\"component-wrapper\">\n  @if (showToolbar) {\n    <div class=\"toolbar-wrapper\">\n      <neurasil-charts-toolbar [(toolbarProps)]=\"toolbarProps\" (toolbarPropsChange)=\"updateToolbarProps($event)\"></neurasil-charts-toolbar>\n    </div>\n  }\n  <div class=\"canvas-wrapper\">\n    <canvas [ngClass]=\"hasData ? '' : 'canvas-hidden'\" #neurasilChartCanvas id=\"neurasilChartCanvas\"></canvas>\n    @if (!hasData) {\n      <div class=\"overlay\">\n        <div class=\"overlay-contents\">\n          {{noDataMessage}}\n        </div>\n      </div>\n    }\n  </div>\n</div>\n", styles: [".canvas-wrapper,neurasil-charts-toolbar{display:block}.component-wrapper{width:100%;height:100%}.toolbar-wrapper{display:block;height:50px}.component-wrapper{display:flex;flex-flow:column;height:100%}.canvas-wrapper{flex:1}.canvas-hidden{display:none}.overlay{width:100%;height:100%;background-color:#0000001a}.overlay-contents{font-family:sans-serif;left:50%;float:left;top:50%;transform:translate(-50%,-50%);position:relative}\n"] }]
-    }], () => [{ type: NeurasilChartsService }, { type: NeurasilDataFilter }], { canvas: [{
+        args: [{ selector: 'neurasil-charts', providers: [NeurasilDataFilter], imports: [NeurasilChartsToolbarComponent, NgClass], template: "\n<div class=\"component-wrapper\">\n  @if (showToolbar) {\n    <div class=\"toolbar-wrapper\">\n      <neurasil-charts-toolbar [(toolbarProps)]=\"toolbarProps\" (toolbarPropsChange)=\"updateToolbarProps($event)\"></neurasil-charts-toolbar>\n    </div>\n  }\n  <div class=\"canvas-wrapper\">\n    @if (toolbarProps.chartType !== NEURASIL_CHART_TYPE.GRID) {\n      @if (canvasVisible) {\n        <canvas [ngClass]=\"hasData ? '' : 'canvas-hidden'\" #neurasilChartCanvas id=\"neurasilChartCanvas\"></canvas>\n      }\n      @if (!hasData) {\n        <div class=\"overlay\">\n          <div class=\"overlay-contents\">\n            {{noDataMessage}}\n          </div>\n        </div>\n      }\n    } @else {\n      <div class=\"grid-wrapper\">\n        @if (gridData.length > 0) {\n          <table class=\"grid-table\">\n            <thead>\n              <tr>\n                @for (col of gridColumns; track col) {\n                  <th>{{col}}</th>\n                }\n              </tr>\n            </thead>\n            <tbody>\n              @for (row of gridData; track $index) {\n                <tr>\n                  @for (col of gridColumns; track col) {\n                    <td>{{row[col]}}</td>\n                  }\n                </tr>\n              }\n            </tbody>\n          </table>\n        } @else {\n          <div class=\"overlay\">\n            <div class=\"overlay-contents\">{{noDataMessage}}</div>\n          </div>\n        }\n      </div>\n    }\n  </div>\n</div>\n", styles: [".canvas-wrapper,neurasil-charts-toolbar{display:block}.component-wrapper{width:100%;height:100%}.toolbar-wrapper{display:block;height:50px}.component-wrapper{display:flex;flex-flow:column;height:100%}.canvas-wrapper{flex:1}.canvas-hidden{display:none}.grid-wrapper{width:100%;height:100%;overflow:auto}.grid-table{width:100%;border-collapse:collapse;font-family:sans-serif;font-size:.875rem}.grid-table th,.grid-table td{border:1px solid #ddd;padding:6px 10px;text-align:left;white-space:nowrap}.grid-table th{background-color:#f0f0f0;font-weight:600;position:sticky;top:0}.grid-table tr:nth-child(2n){background-color:#f9f9f9}.grid-table tr:hover{background-color:#eef4ff}.overlay{width:100%;height:100%;background-color:#0000001a}.overlay-contents{font-family:sans-serif;left:50%;float:left;top:50%;transform:translate(-50%,-50%);position:relative}\n"] }]
+    }], () => [{ type: NeurasilChartsService }, { type: NeurasilDataFilter }, { type: i0.ChangeDetectorRef }], { canvas: [{
             type: ViewChild,
             args: ['neurasilChartCanvas', { static: false }]
         }], data: [{
@@ -833,6 +946,8 @@ class NeurasilChartsModule {
         NeurasilChartsToolbarComponent,
         NeurasilDataFilter], exports: [NeurasilChartsComponent, NeurasilDataFilter] }); })();
 
+const BUILD_TIMESTAMP = "2026-03-24T10:39:11.441Z";
+
 /*
  * Public API Surface of neurasil-charts
  */
@@ -841,5 +956,5 @@ class NeurasilChartsModule {
  * Generated bundle index. Do not edit.
  */
 
-export { NEURASIL_CHART_TYPE, NeurasilChartsComponent, NeurasilChartsModule, NeurasilChartsService, NeurasilDataFilter };
+export { BUILD_TIMESTAMP, NEURASIL_CHART_TYPE, NeurasilChartsComponent, NeurasilChartsModule, NeurasilChartsService, NeurasilDataFilter };
 //# sourceMappingURL=neurasil-charts.mjs.map

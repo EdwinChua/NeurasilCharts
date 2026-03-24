@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UtilsService } from './utils.service';
-import { NEURASIL_CHART_TYPE, NeurasilChartsModule } from 'staticLibraryFiles/neurasil-charts/'
+import { NEURASIL_CHART_TYPE, NeurasilChartsModule, BUILD_TIMESTAMP } from 'staticLibraryFiles/neurasil-charts/'
 
 @Component({
   selector: 'app-root',
@@ -22,13 +22,13 @@ export class AppComponent implements OnInit {
   layout = 1;
   displayStr = "";
   chartProps: Array<any> = [
-    {showToolbar:true, chartType: NEURASIL_CHART_TYPE.BAR, swapLabelsAndDatasets: false},
-    {showToolbar:false, chartType: NEURASIL_CHART_TYPE.HORIZONTAL_BAR, swapLabelsAndDatasets: true},
-    {showToolbar:false, chartType: NEURASIL_CHART_TYPE.LINE, swapLabelsAndDatasets: false},
-    {showToolbar:false, chartType: NEURASIL_CHART_TYPE.STACKED_PARETO, swapLabelsAndDatasets: true},
-    {showToolbar:false, chartType: NEURASIL_CHART_TYPE.PIE, swapLabelsAndDatasets: false},
-    {showToolbar:false, chartType: NEURASIL_CHART_TYPE.DONUT, swapLabelsAndDatasets: true},
-    {showToolbar:true, chartType: NEURASIL_CHART_TYPE.STACKED_PARETO, swapLabelsAndDatasets: false},
+    {showToolbar:true, chartType: NEURASIL_CHART_TYPE.GRID, swapLabelsAndDatasets: false},
+    {showToolbar:true, chartType: NEURASIL_CHART_TYPE.HORIZONTAL_BAR, swapLabelsAndDatasets: true},
+    {showToolbar:true, chartType: NEURASIL_CHART_TYPE.LINE, swapLabelsAndDatasets: false},
+    {showToolbar:true, chartType: NEURASIL_CHART_TYPE.BAR_LINE, swapLabelsAndDatasets: true},
+    {showToolbar:true, chartType: NEURASIL_CHART_TYPE.PIE, swapLabelsAndDatasets: false},
+    {showToolbar:true, chartType: NEURASIL_CHART_TYPE.DONUT, swapLabelsAndDatasets: true},
+    {showToolbar:true, chartType: NEURASIL_CHART_TYPE.STACKED, swapLabelsAndDatasets: false},
     {showToolbar:true, chartType: NEURASIL_CHART_TYPE.STACKED_PARETO, swapLabelsAndDatasets: true},
     {showToolbar:true, chartType: NEURASIL_CHART_TYPE.HORIZONTAL_BAR, swapLabelsAndDatasets: false}
 
@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
 
   constructor(public utilsService:UtilsService){}
   ngOnInit (){
+    console.log('[neurasil-charts] BUILD_TIMESTAMP:', BUILD_TIMESTAMP);
     this.data = this.utilsService.generateSampleData();
   }
 

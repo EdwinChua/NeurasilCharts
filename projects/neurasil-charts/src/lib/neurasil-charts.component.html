@@ -6,12 +6,43 @@
     </div>
   }
   <div class="canvas-wrapper">
-    <canvas [ngClass]="hasData ? '' : 'canvas-hidden'" #neurasilChartCanvas id="neurasilChartCanvas"></canvas>
-    @if (!hasData) {
-      <div class="overlay">
-        <div class="overlay-contents">
-          {{noDataMessage}}
+    @if (toolbarProps.chartType !== NEURASIL_CHART_TYPE.GRID) {
+      @if (canvasVisible) {
+        <canvas [ngClass]="hasData ? '' : 'canvas-hidden'" #neurasilChartCanvas id="neurasilChartCanvas"></canvas>
+      }
+      @if (!hasData) {
+        <div class="overlay">
+          <div class="overlay-contents">
+            {{noDataMessage}}
+          </div>
         </div>
+      }
+    } @else {
+      <div class="grid-wrapper">
+        @if (gridData.length > 0) {
+          <table class="grid-table">
+            <thead>
+              <tr>
+                @for (col of gridColumns; track col) {
+                  <th>{{col}}</th>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of gridData; track $index) {
+                <tr>
+                  @for (col of gridColumns; track col) {
+                    <td>{{row[col]}}</td>
+                  }
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <div class="overlay">
+            <div class="overlay-contents">{{noDataMessage}}</div>
+          </div>
+        }
       </div>
     }
   </div>

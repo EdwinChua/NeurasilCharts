@@ -6,7 +6,8 @@
       "Bash(npm uninstall:*)",
       "WebFetch(domain:angular.dev)",
       "Bash(rm -rf staticLibraryFiles/neurasil-charts)",
-      "Bash(cp -r dist/neurasil-charts staticLibraryFiles/neurasil-charts)"
+      "Bash(cp -r dist/neurasil-charts staticLibraryFiles/neurasil-charts)",
+      "Bash(node -e \"const fs=require\\(''fs''\\);const f=''projects/neurasil-charts/src/lib/build-info.ts'';fs.writeFileSync\\(f,''export const BUILD_TIMESTAMP = '' + JSON.stringify\\(new Date\\(\\).toISOString\\(\\)\\) + '';\\\\n''\\);console.log\\(fs.readFileSync\\(f,''utf8''\\).trim\\(\\)\\)\")"
     ]
   }
 }

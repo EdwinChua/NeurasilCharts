@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, OnChanges, SimpleChanges, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { NeurasilChartsService } from './neurasil-charts.service';
 import { NEURASIL_CHART_TYPE } from './models';
 import { NeurasilDataFilter } from './pipes';
@@ -76,11 +76,15 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
     swapLabelsAndDatasets: false
   };
 
+  NEURASIL_CHART_TYPE = NEURASIL_CHART_TYPE;
   public _canvas: any;
   hasData: boolean;
+  canvasVisible = true;
+  gridData: Array<any> = [];
+  gridColumns: string[] = [];
 
 
-  constructor(public neurasilChartsService: NeurasilChartsService, public neurasilDataFilter: NeurasilDataFilter) { }
+  constructor(public neurasilChartsService: NeurasilChartsService, public neurasilDataFilter: NeurasilDataFilter, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     if (this.chartType) {
@@ -111,20 +115,38 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
 
 
   drawChart(isPrinting: boolean = false) {
-    if (this._canvas) {
-      this._canvas.destroy();
-    }
-    if (!this.canvas) {
-      return;
-    }
-
-    const ctx = this.canvas.nativeElement.getContext('2d');
     const filterString = [this.globalFilter, this.toolbarProps._datasetFilter]
       .filter(Boolean)
       .join(',');
 
     const filteredData = this.neurasilDataFilter.transform(this.data, filterString);
     this.hasData = !!(filteredData && filteredData.length > 0);
+
+    if (this.toolbarProps.chartType === NEURASIL_CHART_TYPE.GRID) {
+      this.gridData = filteredData || [];
+      this.gridColumns = this.gridData.length > 0 ? Object.keys(this.gridData[0]) : [];
+      if (this._canvas) {
+        this._canvas.destroy();
+        this._canvas = null;
+      }
+      return;
+    }
+
+    if (this._canvas) {
+      this._canvas.destroy();
+      this._canvas = null;
+      this.canvasVisible = false;
+      this.cdr.detectChanges();
+      this.canvasVisible = true;
+      this.cdr.detectChanges();
+    } else {
+      this.cdr.detectChanges();
+    }
+    if (!this.canvas) {
+      return;
+    }
+
+    const ctx = this.canvas.nativeElement.getContext('2d');
 
     if (!this.hasData) {
       return;
