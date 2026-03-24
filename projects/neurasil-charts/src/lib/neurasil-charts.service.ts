@@ -167,19 +167,30 @@ export class NeurasilChartsService {
 
     if (chartType !== NEURASIL_CHART_TYPE.PIE && chartType !== NEURASIL_CHART_TYPE.DONUT) {
       const isStacked = chartType === NEURASIL_CHART_TYPE.STACKED || chartType === NEURASIL_CHART_TYPE.STACKED_PARETO;
+      const isHorizontal = chartType === NEURASIL_CHART_TYPE.HORIZONTAL_BAR;
       options.scales = {
         x: {
+          type: isHorizontal ? (useLogScale ? 'logarithmic' : 'linear') : undefined,
           stacked: isStacked || undefined,
-          title: xAxisLabel,
-          ticks: { callback: labelTickCallback }
+          beginAtZero: isHorizontal ? true : undefined,
+          title: isHorizontal ? yAxisLabel : xAxisLabel,
+          ticks: isHorizontal ? {} : { callback: labelTickCallback }
         },
-        yAxis: {
-          type: useLogScale ? 'logarithmic' : 'linear',
-          position: 'left',
-          stacked: isStacked || undefined,
-          beginAtZero: isStacked ? undefined : true,
-          title: yAxisLabel
-        }
+        ...(!isHorizontal && {
+          yAxis: {
+            type: useLogScale ? 'logarithmic' : 'linear',
+            position: 'left',
+            stacked: isStacked || undefined,
+            beginAtZero: isStacked ? undefined : true,
+            title: yAxisLabel
+          }
+        }),
+        ...(isHorizontal && {
+          y: {
+            title: xAxisLabel,
+            ticks: { callback: labelTickCallback }
+          }
+        })
       };
 
       if (chartType === NEURASIL_CHART_TYPE.STACKED_PARETO) {
@@ -343,7 +354,7 @@ export class NeurasilChartsService {
         dataSet.hoverBorderColor = colorPalette[i];
       }
 
-      if (!isPieOrDonut && !isStacked) {
+      if (!isPieOrDonut && !isStacked && chartType !== NEURASIL_CHART_TYPE.HORIZONTAL_BAR) {
         dataSet.yAxisID = yAxis;
       }
 

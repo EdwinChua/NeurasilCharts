@@ -4,7 +4,9 @@
       "Bash(ng update:*)",
       "Bash(npx ng:*)",
       "Bash(npm uninstall:*)",
-      "WebFetch(domain:angular.dev)"
+      "WebFetch(domain:angular.dev)",
+      "Bash(rm -rf staticLibraryFiles/neurasil-charts)",
+      "Bash(cp -r dist/neurasil-charts staticLibraryFiles/neurasil-charts)"
     ]
   }
 }

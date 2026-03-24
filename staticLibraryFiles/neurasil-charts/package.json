@@ -6,23 +6,15 @@
     "@angular/core": "~14.0.3",
     "chart.js": "^3.8.0"
   },
-  "module": "fesm2015/neurasil-charts.mjs",
-  "es2020": "fesm2020/neurasil-charts.mjs",
-  "esm2020": "esm2020/neurasil-charts.mjs",
-  "fesm2020": "fesm2020/neurasil-charts.mjs",
-  "fesm2015": "fesm2015/neurasil-charts.mjs",
-  "typings": "index.d.ts",
+  "module": "fesm2022/neurasil-charts.mjs",
+  "typings": "types/neurasil-charts.d.ts",
   "exports": {
     "./package.json": {
       "default": "./package.json"
     },
     ".": {
-      "types": "./index.d.ts",
-      "esm2020": "./esm2020/neurasil-charts.mjs",
-      "es2020": "./fesm2020/neurasil-charts.mjs",
-      "es2015": "./fesm2015/neurasil-charts.mjs",
-      "node": "./fesm2015/neurasil-charts.mjs",
-      "default": "./fesm2020/neurasil-charts.mjs"
+      "types": "./types/neurasil-charts.d.ts",
+      "default": "./fesm2022/neurasil-charts.mjs"
     }
   },
   "sideEffects": false,
@@ -30,6 +22,6 @@
     "tslib": "^2.3.0"
   },
   "scripts": {
-    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled by Ivy in full compilation mode. This is not allowed.\\nPlease delete and rebuild the package with Ivy partial compilation mode, before attempting to publish.\\n')\" && exit 1"
+    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled in full compilation mode. This is not allowed.\\nPlease delete and rebuild the package with partial compilation mode, before attempting to publish.\\n')\" && exit 1"
   }
 }

@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   displayStr = "";
   chartProps: Array<any> = [
     {showToolbar:true, chartType: NEURASIL_CHART_TYPE.BAR, swapLabelsAndDatasets: false},
-    {showToolbar:false, chartType: NEURASIL_CHART_TYPE.BAR, swapLabelsAndDatasets: true},
+    {showToolbar:false, chartType: NEURASIL_CHART_TYPE.HORIZONTAL_BAR, swapLabelsAndDatasets: true},
     {showToolbar:false, chartType: NEURASIL_CHART_TYPE.LINE, swapLabelsAndDatasets: false},
     {showToolbar:false, chartType: NEURASIL_CHART_TYPE.STACKED_PARETO, swapLabelsAndDatasets: true},
     {showToolbar:false, chartType: NEURASIL_CHART_TYPE.PIE, swapLabelsAndDatasets: false},
