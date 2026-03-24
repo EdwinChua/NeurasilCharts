@@ -1,14 +1,18 @@
 
 <div class="component-wrapper">
-    <div class="toolbar-wrapper" *ngIf="showToolbar">
-        <neurasil-charts-toolbar [(toolbarProps)]="toolbarProps" (toolbarPropsChange)="updateToolbarProps($event)"></neurasil-charts-toolbar>
+  @if (showToolbar) {
+    <div class="toolbar-wrapper">
+      <neurasil-charts-toolbar [(toolbarProps)]="toolbarProps" (toolbarPropsChange)="updateToolbarProps($event)"></neurasil-charts-toolbar>
     </div>
-    <div class="canvas-wrapper">
-        <canvas [ngClass]="hasData ? '' : 'canvas-hidden'" #neurasilChartCanvas id="neurasilChartCanvas"></canvas>
-        <div class="overlay" *ngIf="!hasData">
-            <div class="overlay-contents">
-                {{noDataMessage}}
-            </div>
+  }
+  <div class="canvas-wrapper">
+    <canvas [ngClass]="hasData ? '' : 'canvas-hidden'" #neurasilChartCanvas id="neurasilChartCanvas"></canvas>
+    @if (!hasData) {
+      <div class="overlay">
+        <div class="overlay-contents">
+          {{noDataMessage}}
         </div>
-    </div>
+      </div>
+    }
+  </div>
 </div>

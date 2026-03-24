@@ -34,3 +34,10 @@ export const Title = {};
 export const Tooltip = {};
 
 export default Chart;
+
+// helpers (used by chartjs-plugin-datalabels)
+export const toPadding = () => ({ top: 0, right: 0, bottom: 0, left: 0, width: 0, height: 0 });
+export const valueOrDefault = (value, defaultValue) => value === undefined ? defaultValue : value;
+export const callback = (fn, args, thisArg) => fn && fn.apply(thisArg, args);
+export const isObject = (value) => value !== null && typeof value === 'object';
+export const each = (loopable, fn, thisArg) => { if (Array.isArray(loopable)) loopable.forEach(fn, thisArg); };

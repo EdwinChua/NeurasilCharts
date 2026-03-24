@@ -6,15 +6,17 @@ import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { NeurasilChartsToolbarComponent } from './neurasil-charts-toolbar/neurasil-charts-toolbar.component';
+import { NgClass } from '@angular/common';
 
 
 
 @Component({
-  selector: 'neurasil-charts',
-  standalone: false,
-  templateUrl: './neurasil-charts.component.html',
-  styleUrls: ['./neurasil-charts.component.sass'],
-  providers: [NeurasilDataFilter]
+    selector: 'neurasil-charts',
+    templateUrl: './neurasil-charts.component.html',
+    styleUrls: ['./neurasil-charts.component.sass'],
+    providers: [NeurasilDataFilter],
+    imports: [NeurasilChartsToolbarComponent, NgClass]
 })
 export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges {
 
@@ -122,7 +124,7 @@ export class NeurasilChartsComponent implements OnInit, AfterViewInit, OnChanges
       .join(',');
 
     const filteredData = this.neurasilDataFilter.transform(this.data, filterString);
-    this.hasData = (filteredData && filteredData.length > 0);
+    this.hasData = !!(filteredData && filteredData.length > 0);
 
     if (!this.hasData) {
       return;

@@ -6,15 +6,13 @@ import { NeurasilChartsComponent } from './neurasil-charts.component';
 import { NeurasilDataFilter } from './pipes/neurasil-data-filter/neurasil-data-filter.pipe';
 
 @NgModule({
-  declarations: [
-    NeurasilChartsComponent,
-    NeurasilChartsToolbarComponent,
-    NeurasilDataFilter
-  ],
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
-  exports: [NeurasilChartsComponent,NeurasilDataFilter]
+    imports: [
+        CommonModule,
+        FormsModule,
+        NeurasilChartsComponent,
+        NeurasilChartsToolbarComponent,
+        NeurasilDataFilter
+    ],
+    exports: [NeurasilChartsComponent, NeurasilDataFilter]
 })
 export class NeurasilChartsModule { }

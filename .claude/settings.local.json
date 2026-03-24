@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ng update:*)",
+      "Bash(npx ng:*)",
+      "Bash(npm uninstall:*)",
+      "WebFetch(domain:angular.dev)"
+    ]
+  }
+}

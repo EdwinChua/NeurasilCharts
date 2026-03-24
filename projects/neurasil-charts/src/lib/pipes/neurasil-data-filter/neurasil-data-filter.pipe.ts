@@ -1,9 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'neurasilDataFilter',
-  standalone: false,
-  pure: true
+    name: 'neurasilDataFilter',
+    pure: true
 })
 export class NeurasilDataFilter implements PipeTransform {
 

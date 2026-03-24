@@ -1,10 +1,13 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { UtilsService } from './utils.service';
-import { NEURASIL_CHART_TYPE } from 'staticLibraryFiles/neurasil-charts/'
+import { NEURASIL_CHART_TYPE, NeurasilChartsModule } from 'staticLibraryFiles/neurasil-charts/'
 
 @Component({
   selector: 'app-root',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, NeurasilChartsModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
@@ -19,7 +22,7 @@ export class AppComponent implements OnInit {
   layout = 1;
   displayStr = "";
   chartProps: Array<any> = [
-    {showToolbar:false, chartType: NEURASIL_CHART_TYPE.BAR, swapLabelsAndDatasets: false},
+    {showToolbar:true, chartType: NEURASIL_CHART_TYPE.BAR, swapLabelsAndDatasets: false},
     {showToolbar:false, chartType: NEURASIL_CHART_TYPE.BAR, swapLabelsAndDatasets: true},
     {showToolbar:false, chartType: NEURASIL_CHART_TYPE.LINE, swapLabelsAndDatasets: false},
     {showToolbar:false, chartType: NEURASIL_CHART_TYPE.STACKED_PARETO, swapLabelsAndDatasets: true},
